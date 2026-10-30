@@ -261,10 +261,56 @@ table.mx td.zero{color:#3D4750}
 #browse-contrast p b{color:var(--text);font-weight:600}
 #browse-cards{columns:290px;column-gap:10px;margin-top:12px}
 #browse-cards .bcard{break-inside:avoid;margin-bottom:10px;display:block;border-left:4px solid var(--c,var(--amber))}
-#ov-browse .ov-body{max-width:1280px}
+#ov-browse .ov-body{max-width:none;padding:12px 18px}
+.bwrap{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:1000px){.bwrap{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+  .bmap{position:sticky;top:0;align-self:start}}
+.bmap #browsesvg{height:auto;aspect-ratio:var(--ar,2);max-height:calc(100vh - 150px);width:100%;min-height:0}
+.bmap .hint{font-size:12px;color:var(--muted);margin-top:6px}
+#browsesvg .zn{cursor:pointer}
+#browse-side #browse-cards{columns:270px;margin-top:4px}
+.bcard .rg{margin-top:8px;background:none;border:1px solid var(--c,var(--amber));color:var(--text);font:inherit;
+  font-size:12.5px;padding:4px 10px;border-radius:var(--r);cursor:pointer}
+.bcard .rg:hover{background:var(--c,var(--amber));color:#12171C}
+#ov-sheet .ov-body{max-width:none;padding:14px 20px}
+.sh-head{display:flex;gap:12px;align-items:center;border-left:6px solid var(--c);padding-left:12px;margin-bottom:10px}
+.sh-head .sw{display:none}
+.sh-head h2{font-size:24px;margin:0}
+.sh-head .pl{color:var(--muted);font-size:13px}
+.sh-tabs{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--muted);flex-wrap:wrap;margin-bottom:8px}
+#sheet-body .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:14px;align-items:start}
+#sheet-body section{margin:0 0 14px;padding:12px 14px;background:var(--ink-2);border:1px solid var(--ink-3);border-radius:var(--r)}
+#sheet-body h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--amber);margin:0 0 8px}
+#sheet-body h4{font-size:12px;color:var(--muted);margin:12px 0 6px;font-weight:500}
+#sheet-body .tl{font-size:14px;color:var(--text);margin:0 0 8px;max-width:90ch;line-height:1.5}
+.abc{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:5px}
+.abc .ch{background:#FAFBFB;color:#12171C;border-radius:4px;text-align:center;padding:4px 2px}
+.abc .ch b{display:block;font-size:26px;font-weight:500;line-height:1.35}
+.abc .ch i{display:block;font-style:normal;font-size:12px;color:#4a5560;font-family:'IBM Plex Sans',sans-serif}
+.abc .ch.dec{background:#F6E2B8;box-shadow:inset 0 0 0 2px var(--amber)}
+.abc .ch.ext{background:#DDEBF8}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px}
+.words .w{background:var(--ink);border:1px solid var(--ink-3);border-radius:4px;padding:6px 9px}
+.words b{display:block;font-size:22px;font-weight:500;line-height:1.35}
+.words i{display:block;font-style:normal;color:var(--amber);font-size:13px}
+.words span{font-size:12px;color:var(--muted)}
+.smps{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.smps .sm{background:#FAFBFB;color:#12171C;border-radius:4px;padding:6px 10px}
+.smps b{display:block;font-size:22px;font-weight:500;line-height:1.4}
+.smps i{display:block;font-style:normal;font-size:13px;color:#4a5560}
+.smps mark,.words mark{background:rgba(224,166,60,.45);color:inherit;border-radius:3px}
+.sh-conf{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.sh-conf .lbl{font-size:11px;color:var(--muted)}
+.sh-conf .cf{background:var(--ink);border:1px solid var(--ink-3);color:var(--text);font:inherit;font-size:13px;padding:4px 9px;border-radius:var(--r);cursor:pointer}
+.sh-note{margin-top:10px;border-top:1px solid var(--ink-3);padding-top:8px}
+.sh-note h4{color:var(--amber)!important}
+.sh-note p{font-size:13px;color:var(--muted);margin:0 0 5px;line-height:1.5}
+.sh-note p b{color:var(--text)}
+.sh-foot{margin:4px 0 20px}
 .btop{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
-@media (min-width:900px){.btop{grid-template-columns:minmax(0,1.35fr) minmax(300px,1fr);align-items:start}}
-.btop #browsesvg{height:auto;aspect-ratio:var(--ar,2);max-height:72vh;min-height:0}
+@media (min-width:900px){.btop{grid-template-columns:minmax(0,1.7fr) minmax(320px,1fr);align-items:start}}
+.btop #browsesvg{height:auto;aspect-ratio:var(--ar,2);max-height:78vh;min-height:0;width:100%}
+#browse-zoom{font-size:12px;color:var(--muted)} #browse-zoom button{margin-left:6px}
 #browse-side{display:flex;flex-direction:column;gap:10px;min-width:0}
 #browse-side #browse-contrast{margin:0}
 #browse-side #browse-tools{margin:0}
@@ -442,18 +488,24 @@ table.mx td.zero{color:#3D4750}
   <div class="ov-body">
     <p>No quiz. Pick a group: where each language is written, how to tell it from its neighbours, and what it looks like.</p>
     <div class="chips" id="browse-chips" style="margin-bottom:12px"></div>
-    <div class="btop">
-      <svg id="browsesvg" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="bwrap">
+      <div class="bmap"><svg id="browsesvg" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="hint">Tap an area on the map for its reading guide. Tap a language below to zoom on it.</div></div>
       <div id="browse-side">
         <div class="blg" id="browse-lg"></div>
-        <div id="browse-tools"><button class="chip" id="btn-drillcat">Practise this group</button>
-          <span class="hint">Tap a language to light up its area and cities.</span></div>
+        <div id="browse-tools"><button class="chip" id="btn-drillcat">Practise this group</button></div>
         <div id="browse-contrast"></div>
+        <div id="browse-cards"></div>
       </div>
     </div>
-    <div id="browse-cards"></div>
     <div id="browse-legend"></div>
   </div>
+</div>
+
+<div class="overlay" id="ov-sheet">
+  <div class="ov-head"><button class="railbtn" id="sheet-back">← Map</button><h2>Reading guide</h2><div class="spacer"></div>
+    <button class="railbtn" data-close>Close</button></div>
+  <div class="ov-body" id="sheet-body"></div>
 </div>
 
 <div class="overlay" id="ov-stats">
@@ -1277,7 +1329,7 @@ const lookPeers = id => DATA.filter(d => LOOK_OF[d.id] === LOOK_OF[id] && d.id !
    ============================================================ */
 /* Shown in Settings so a stale cached or undeployed copy is identifiable at a
    glance instead of being debugged as a logic fault. */
-const BUILD = "2026-10-31 · b11 study layout, colours, #iso";
+const BUILD = "2026-10-31 · b13 reading guides";
 const KEY = "signreader.v2";
 /* A saved setting always beats a new default, so changing DEFAULT_STATE alone
    never reaches anyone who has already played. Migrations run once and are
@@ -1999,7 +2051,10 @@ function paintRail(){
    INPUT
    ============================================================ */
 document.addEventListener("keydown", e=>{
-  if(document.querySelector(".overlay.open")){ if(e.key==="Escape") closeOverlays(); return; }
+  if(document.querySelector(".overlay.open")){
+    if(e.key==="Escape"){ const sh = document.getElementById("ov-sheet");
+      if(sh.classList.contains("open")) sh.classList.remove("open"); else closeOverlays(); }
+    return; }
   if(e.key===" "||e.key==="Enter"){
     e.preventDefault();
     if(round && !round.answered && round.kind === "map" && mapPick) answerMap();
@@ -2259,7 +2314,7 @@ function regionPath(key){
 function regionBBox(keys){
   let x0 = 180, x1 = -180, y0 = 90, y1 = -90;
   keys.forEach(k => (REGIONS[k] ? REGIONS[k].r : []).forEach(ring => ring.forEach(([lo, la]) => {
-    if(k === "c_ru" && lo < 0) return;
+    if(k === "c_ru" && (lo < 0 || lo > 150 || la > 78)) return;
     if(lo < x0) x0 = lo; if(lo > x1) x1 = lo;
     if(la < y0) y0 = la; if(la > y1) y1 = la;
   })));
@@ -2373,13 +2428,15 @@ function cityLayer(vx, vy, vw, vh, opts){
   const minor = vw <= (o.minorAt || 48);
   const zk = o.keys && o.keys.length ? citiesIn(o.keys) : null;
   const full = o.all || [];
+  const X = o.xf || (v => v);
   const inView = MAP_CITIES.filter(([, la, lo, rk], i) =>
     (!zk || zk[i].length) &&
     (rk === 1 || minor || (zk && zk[i].some(k => full.includes(k)))) &&
-    lo > vx && lo < vx + vw && -la > vy && -la < vy + vh);
+    X(lo) > vx && X(lo) < vx + vw && -la > vy && -la < vy + vh);
   inView.sort((a, b) => a[3] - b[3]);
   const boxes = []; let s = "", n = 0;
-  for(const [name, la, lo] of inView){
+  for(const [name, la, lon] of inView){
+    const lo = X(lon);
     if(n >= (o.max || 60)) break;
     const tw = name.length * fs * 0.52, flip = lo + r * 2 + tw > vx + vw;
     const x0 = flip ? lo - r * 2 - tw : lo + r * 2, y0 = -la - fs * 0.8, y1 = -la + fs * 0.3;
@@ -2673,7 +2730,7 @@ function medianDist(id){
    Being quizzed cold on a map you have never studied is the slowest
    way to learn one. This is the place to just look.
    ============================================================ */
-let browseCat = "indicn", browseFocus = null, browseRel = [];
+let browseCat = "indicn", browseFocus = null, browseRel = [], browseScaleC = 1;
 /* One colour per language. The Indic ones match the Atlas card
    "Écritures des panneaux Inde · Bangladesh · Sri Lanka". */
 const LANG_COLOR = {
@@ -2723,17 +2780,25 @@ function paintBrowse(){
   else {
     svg.style.display = "";
     const keys = [...new Set(langs.flatMap(d => d.z))];
-    const bb = regionBBox(keys);
-    const cx = (bb.x0+bb.x1)/2, cy = (bb.y0+bb.y1)/2;
-    const sx = (bb.x1-bb.x0)*1.25, sy = (bb.y1-bb.y0)*1.25;
+    const fz0 = browseFocus ? (BY_ID[browseFocus].z || []) : [];
+    /* tapping a language zooms on it: the Balkans are unreadable next to Russia */
+    const frameKeys = fz0.length ? fz0 : keys;
+    const pad = fz0.length ? 1.9 : 1.2;
+    const bb = regionBBox(frameKeys);
+    /* plain lon/lat stretches the north sideways: x is scaled by cos(latitude) */
+    const c = Math.cos(((bb.y0 + bb.y1) / 2) * Math.PI / 180);
+    const xf = v => v * c;
+    browseScaleC = c;
+    const cx = xf((bb.x0+bb.x1)/2), cy = (bb.y0+bb.y1)/2;
+    const sx = xf(bb.x1-bb.x0)*pad, sy = (bb.y1-bb.y0)*pad;
     /* the frame follows the group's shape: India is tall, Russia is wide */
-    const ar = Math.min(2.2, Math.max(1, sx / Math.max(sy, 1)));
-    const w = Math.max(sx, sy*ar, 14), h = w/ar;
+    const ar = Math.min(2.1, Math.max(0.95, sx / Math.max(sy, 1)));
+    const w = Math.max(sx, sy*ar, fz0.length ? 9 : 12), h = w/ar;
     const vx = cx-w/2, vy = -(cy+h/2);
-    const fs = w/34;
+    const fs = w/32;
     svg.style.setProperty("--ar", ar.toFixed(3));
     const fz = browseFocus ? (BY_ID[browseFocus].z || []) : [];
-    let s = `<path class="land" d="${MAP_FILL}"/><path class="brd" d="${MAP_BORDERS}"/>`;
+    let s = `<g transform="scale(${c.toFixed(4)},1)"><path class="land" d="${MAP_FILL}"/><path class="brd" d="${MAP_BORDERS}"/>`;
     /* larger regions first, so a small one shared by two languages stays visible */
     const order = langs.flatMap(d => d.z.map(k => [k, d.id]))
       .sort((a, b) => REGIONS[b[0]].a - REGIONS[a[0]].a);
@@ -2742,14 +2807,15 @@ function paintBrowse(){
       const op = !browseFocus ? .62 : on ? .85 : .12;
       s += `<path class="zn" d="${regionPath(k)}" style="fill:${col[id]};fill-opacity:${op};stroke:${col[id]};stroke-opacity:${on ? 1 : .35}"/>`;
     });
-    s += cityLayer(vx, vy, w, h, {fs: w/62, r: w/360, minorAt: 30, max: 70, keys, all: fz});
+    s += "</g>";
+    s += cityLayer(vx, vy, w, h, {fs: w/60, r: w/360, minorAt: 30, max: 70, keys, all: fz, xf});
     /* one label per language, on its largest region */
     const items = langs.filter(d => !browseFocus || d.id === browseFocus).map(d => {
       const k = d.z.slice().sort((a,b)=>REGIONS[b].a-REGIONS[a].a)[0];
-      return {x: REGIONS[k].c[1], y: -REGIONS[k].c[0], t: d.name};
+      return {x: xf(REGIONS[k].c[1]), y: -REGIONS[k].c[0], t: d.name};
     });
     placeLabels(items, fs, w).forEach(it =>
-      s += `<text class="lbl" x="${it.x}" y="${it.y.toFixed(2)}" font-size="${fs.toFixed(2)}" text-anchor="middle">${esc(it.t)}</text>`);
+      s += `<text class="lbl" x="${it.x.toFixed(2)}" y="${it.y.toFixed(2)}" font-size="${fs.toFixed(2)}" text-anchor="middle">${esc(it.t)}</text>`);
     svg.setAttribute("viewBox", [vx, vy, w, h].map(n=>n.toFixed(2)).join(" "));
     svg.innerHTML = s;
   }
@@ -2787,10 +2853,11 @@ function paintBrowse(){
       (smp.length ? `<div class="smp" style="font-family:${d.font},'Noto Sans',sans-serif">` +
         smp.map(x => `<span>${highlight(x, d)}</span>`).join("") + "</div>" : "") +
       (!d.z.length ? `<div class="tl" style="margin:6px 0 0">Not on the map yet.</div>` : "") +
-      "</div>";
+      `<button class="rg" data-rg="${d.id}">Reading guide →</button></div>`;
   }).join("");
   const focus = id => { browseFocus = browseFocus === id ? null : id; paintBrowse(); };
   document.querySelectorAll("#browse-cards .bcard, #browse-lg button").forEach(c => c.onclick = () => focus(c.dataset.id));
+  document.querySelectorAll("#browse-cards .rg").forEach(b => b.onclick = e => { e.stopPropagation(); openSheet(b.dataset.rg); });
   document.getElementById("browse-legend").innerHTML = langs.map(d =>
     `<div class="row"><b>${esc(d.name)}</b> <span>— ${esc(d.z.map(k=>REGIONS[k].n).join(", "))}</span></div>`
   ).join("");
@@ -2822,6 +2889,426 @@ function routeHash(){
   paintBrowse(); $("#ov-browse").classList.add("open");
 }
 window.addEventListener("hashchange", routeHash);
+/* a tap on the study map opens the guide of whatever is written there */
+document.getElementById("browsesvg").addEventListener("click", e => {
+  const svg = e.currentTarget, ctm = svg.getScreenCTM(); if(!ctm) return;
+  const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+  const p = pt.matrixTransform(ctm.inverse());
+  const lon = p.x / browseScaleC, lat = -p.y;
+  const langs = browseLangs(CAT_BY_K[browseCat]).filter(d => d.z.length);
+  const k = regionAt(lat, lon, [...new Set(langs.flatMap(d => d.z))]);
+  if(!k) return;
+  const ids = langs.filter(d => d.z.includes(k)).map(d => d.id);
+  openSheet(ids[0], ids);
+});
+document.getElementById("sheet-back").onclick = () => document.getElementById("ov-sheet").classList.remove("open");
+/* ============================================================
+   READING GUIDE
+   One sheet per language: how to spot it, the alphabet with its
+   romanisation, the words that recur on signs, and every sample
+   string with a transliteration underneath — enough to read a sign
+   in game with the sheet open beside it.
+   ============================================================ */
+
+/* ---------- Cyrillic: one table, per-language alphabets and overrides ---------- */
+const CYR_BASE = {а:"a",б:"b",в:"v",г:"g",д:"d",е:"e",ё:"yo",ж:"zh",з:"z",и:"i",й:"y",к:"k",л:"l",м:"m",н:"n",
+  о:"o",п:"p",р:"r",с:"s",т:"t",у:"u",ф:"f",х:"kh",ц:"ts",ч:"ch",ш:"sh",щ:"shch",ъ:"ʺ",ы:"y",ь:"ʹ",э:"e",ю:"yu",я:"ya"};
+const CYR = {
+  ru:{abc:"абвгдеёжзийклмнопрстуфхцчшщъыьэюя"},
+  uk:{abc:"абвгґдеєжзиіїйклмнопрстуфхцчшщьюя", map:{г:"h",ґ:"g",є:"ye",и:"y",і:"i",ї:"yi","'":"","’":""}},
+  be:{abc:"абвгдеёжзійклмнопрстуўфхцчшыьэюя", map:{г:"h",і:"i",ў:"w"}},
+  bg:{abc:"абвгдежзийклмнопрстуфхцчшщъьюя", map:{щ:"sht",ъ:"ă",ь:"y"}},
+  sr:{abc:"абвгдђежзијклљмнњопрстћуфхцчџш", map:{ђ:"đ",ж:"ž",ј:"j",љ:"lj",њ:"nj",ћ:"ć",х:"h",ц:"c",ч:"č",џ:"dž",ш:"š"}},
+  mk:{abc:"абвгдѓежзѕијклљмнњопрстќуфхцчџш", map:{ѓ:"gj",ѕ:"dz",ј:"j",љ:"lj",њ:"nj",ќ:"kj",х:"h",ц:"c",џ:"dž"}},
+  kk:{abc:"аәбвгғдеёжзийкқлмнңоөпрстуұүфхһцчшщъыіьэюя", map:{ә:"ä",ғ:"ğ",қ:"q",ң:"ñ",ө:"ö",ұ:"ū",ү:"ü",һ:"h",і:"i",ы:"y"}},
+  ky:{abc:"абвгдеёжзийклмнңоөпрстуүфхцчшщъыьэюя", map:{ң:"ng",ө:"ö",ү:"ü"}},
+  mn:{abc:"абвгдеёжзийклмноөпрстуүфхцчшщъыьэюя", map:{е:"ye",ө:"ö",ү:"ü"}}
+};
+const CYR_NOTE = {
+  sr:"The romanisation is Serbian Latin itself: the same names appear in Latin on many signs and on the map.",
+  uk:"Romanisation as on Ukrainian road signs: г = h, и = y, і = i.",
+  bg:"Bulgarian romanisation: щ = sht, ъ = ă.",
+  mk:"Macedonian romanisation: ѓ = gj, ќ = kj, ѕ = dz."
+};
+
+/* ---------- other alphabets ---------- */
+const GREEK = {α:"a",β:"v",γ:"g",δ:"d",ε:"e",ζ:"z",η:"i",θ:"th",ι:"i",κ:"k",λ:"l",μ:"m",ν:"n",ξ:"x",ο:"o",π:"p",ρ:"r",
+  σ:"s",ς:"s",τ:"t",υ:"y",φ:"f",χ:"ch",ψ:"ps",ω:"o"};
+const GREEK_DI = [["ου","ou"],["αι","ai"],["ει","ei"],["οι","oi"],["γγ","ng"],["αυ","av"],["ευ","ev"]];
+const GEORGIAN = {ა:"a",ბ:"b",გ:"g",დ:"d",ე:"e",ვ:"v",ზ:"z",თ:"t",ი:"i",კ:"k'",ლ:"l",მ:"m",ნ:"n",ო:"o",პ:"p'",ჟ:"zh",
+  რ:"r",ს:"s",ტ:"t'",უ:"u",ფ:"p",ქ:"k",ღ:"gh",ყ:"q'",შ:"sh",ჩ:"ch",ც:"ts",ძ:"dz",წ:"ts'",ჭ:"ch'",ხ:"kh",ჯ:"j",ჰ:"h"};
+const ARMENIAN = {ա:"a",բ:"b",գ:"g",դ:"d",ե:"e",զ:"z",է:"e",ը:"ə",թ:"t'",ժ:"zh",ի:"i",լ:"l",խ:"kh",ծ:"ts",կ:"k",հ:"h",
+  ձ:"dz",ղ:"gh",ճ:"ch",մ:"m",յ:"y",ն:"n",շ:"sh",ո:"o",չ:"ch'",պ:"p",ջ:"j",ռ:"r",ս:"s",վ:"v",տ:"t",ր:"r",ց:"ts'",
+  ւ:"w",փ:"p'",ք:"k'",օ:"o",ֆ:"f",և:"ev"};
+const ARMENIAN_DI = [["ու","u"]];
+const HEBREW = {א:"ʼ",ב:"b/v",ג:"g",ד:"d",ה:"h",ו:"v/o/u",ז:"z",ח:"ḥ",ט:"t",י:"y/i",כ:"k/kh",ך:"kh",ל:"l",מ:"m",ם:"m",
+  נ:"n",ן:"n",ס:"s",ע:"ʽ",פ:"p/f",ף:"f",צ:"ts",ץ:"ts",ק:"k",ר:"r",ש:"sh",ת:"t"};
+const HEBREW_TR = {...HEBREW, ב:"v",ו:"v",י:"y",כ:"k",פ:"p"};
+const ARABIC = {ا:"a",أ:"a",إ:"i",آ:"ā",ب:"b",پ:"p",ت:"t",ٹ:"ṭ",ث:"th",ج:"j",چ:"ch",ح:"ḥ",خ:"kh",د:"d",ڈ:"ḍ",ذ:"dh",
+  ر:"r",ڑ:"ṛ",ز:"z",ژ:"zh",س:"s",ش:"sh",ص:"ṣ",ض:"ḍ",ط:"ṭ",ظ:"ẓ",ع:"ʿ",غ:"gh",ف:"f",ق:"q",ك:"k",ک:"k",گ:"g",
+  ل:"l",م:"m",ن:"n",ں:"ñ",ه:"h",ہ:"h",ھ:"h",ة:"a",و:"w",ي:"y",ی:"y",ى:"ā",ے:"e",ء:"ʼ",ؤ:"ʼ",ئ:"ʼ"};
+const ARABIC_ABC = {
+  ar:"ابتثجحخدذرزسشصضطظعغفقكلمنهوي",
+  fa:"ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی",
+  ur:"ابپتٹثجچحخدڈذرڑزژسشصضطظعغفقکگلمنںوہھیے"
+};
+
+/* ---------- Indic: nine scripts share one layout (ISCII order) ---------- */
+const INDIC_BASE = {hi:0x0900, mr:0x0900, ne:0x0900, bn:0x0980, as:0x0980, pa:0x0A00, gu:0x0A80, or:0x0B00,
+  ta:0x0B80, te:0x0C00, kn:0x0C80, ml:0x0D00};
+const IV = {0x05:"a",0x06:"ā",0x07:"i",0x08:"ī",0x09:"u",0x0A:"ū",0x0B:"ṛ",0x0E:"e",0x0F:"e",0x10:"ai",0x12:"o",0x13:"o",0x14:"au"};
+const IC = {0x15:"k",0x16:"kh",0x17:"g",0x18:"gh",0x19:"ṅ",0x1A:"c",0x1B:"ch",0x1C:"j",0x1D:"jh",0x1E:"ñ",0x1F:"ṭ",0x20:"ṭh",
+  0x21:"ḍ",0x22:"ḍh",0x23:"ṇ",0x24:"t",0x25:"th",0x26:"d",0x27:"dh",0x28:"n",0x29:"ṉ",0x2A:"p",0x2B:"ph",0x2C:"b",0x2D:"bh",
+  0x2E:"m",0x2F:"y",0x30:"r",0x31:"ṟ",0x32:"l",0x33:"ḷ",0x34:"ḻ",0x35:"v",0x36:"ś",0x37:"ṣ",0x38:"s",0x39:"h"};
+const IM = {0x3E:"ā",0x3F:"i",0x40:"ī",0x41:"u",0x42:"ū",0x43:"ṛ",0x46:"e",0x47:"e",0x48:"ai",0x4A:"o",0x4B:"o",0x4C:"au"};
+const ISIGN = {0x01:"m̐",0x02:"ṁ",0x03:"ḥ"};
+/* letters each script really has (offsets) */
+const INDIC_SET = {
+  hi:{v:[5,6,7,8,9,10,11,15,16,19,20], c:"15-28,2A-30,32,35-39", m:[0x3E,0x3F,0x40,0x41,0x42,0x43,0x47,0x48,0x4B,0x4C]},
+  bn:{v:[5,6,7,8,9,10,11,15,16,19,20], c:"15-28,2A-30,32,36-39", m:[0x3E,0x3F,0x40,0x41,0x42,0x43,0x47,0x48,0x4B,0x4C]},
+  pa:{v:[5,6,7,8,9,10,15,16,19,20], c:"15-28,2A-30,32,33,35,36,38,39", m:[0x3E,0x3F,0x40,0x41,0x42,0x47,0x48,0x4B,0x4C]},
+  gu:{v:[5,6,7,8,9,10,11,15,16,19,20], c:"15-28,2A-30,32,33,35-39", m:[0x3E,0x3F,0x40,0x41,0x42,0x43,0x47,0x48,0x4B,0x4C]},
+  or:{v:[5,6,7,8,9,10,11,15,16,19,20], c:"15-28,2A-30,32,33,35-39", m:[0x3E,0x3F,0x40,0x41,0x42,0x43,0x47,0x48,0x4B,0x4C]},
+  ta:{v:[5,6,7,8,9,10,14,15,16,18,19,20], c:"15,19,1A,1C,1E,1F,23,24,28,29,2A,2E-35,37-39", m:[0x3E,0x3F,0x40,0x41,0x42,0x46,0x47,0x48,0x4A,0x4B,0x4C]},
+  te:{v:[5,6,7,8,9,10,11,14,15,16,18,19,20], c:"15-28,2A-33,35-39", m:[0x3E,0x3F,0x40,0x41,0x42,0x43,0x46,0x47,0x48,0x4A,0x4B,0x4C]},
+  kn:{v:[5,6,7,8,9,10,11,14,15,16,18,19,20], c:"15-28,2A-33,35-39", m:[0x3E,0x3F,0x40,0x41,0x42,0x43,0x46,0x47,0x48,0x4A,0x4B,0x4C]},
+  ml:{v:[5,6,7,8,9,10,11,14,15,16,18,19,20], c:"15-28,2A-39", m:[0x3E,0x3F,0x40,0x41,0x42,0x43,0x46,0x47,0x48,0x4A,0x4B,0x4C]}
+};
+INDIC_SET.mr = INDIC_SET.ne = INDIC_SET.hi; INDIC_SET.as = INDIC_SET.bn;
+/* extra letters outside the shared layout: [code point, roman] */
+const INDIC_EXTRA = {
+  hi:[[0x095C,"ṛ"],[0x095D,"ṛh"],[0x095B,"z"],[0x095E,"f"]], mr:[[0x0933,"ḷ"]], ne:[],
+  bn:[[0x09DC,"ṛ"],[0x09DD,"ṛh"],[0x09DF,"ẏ"],[0x09CE,"t (no vowel)"]], as:[[0x09F0,"r"],[0x09F1,"w"],[0x09DC,"ṛ"],[0x09DF,"ẏ"]],
+  pa:[[0x0A5C,"ṛ"],[0x0A59,"x"],[0x0A5A,"ġ"],[0x0A5B,"z"],[0x0A5E,"f"],[0x0A70,"ṁ (tippi)"],[0x0A71,"double (addak)"]],
+  gu:[], or:[[0x0B5F,"ẏ"],[0x0B71,"w"],[0x0B5C,"ṛ"],[0x0B5D,"ṛh"]], ta:[], te:[], kn:[],
+  ml:[[0x0D7A,"ṇ (final)"],[0x0D7B,"n (final)"],[0x0D7C,"r (final)"],[0x0D7D,"l (final)"],[0x0D7E,"ḷ (final)"]]
+};
+const NUKTA = {k:"q",kh:"x",g:"ġ",j:"z",ḍ:"ṛ",ḍh:"ṛh",ph:"f",y:"ẏ"};
+const INDIC_FINAL_A = new Set(["hi","mr","ne","pa","gu","bn","as","or"]);   // schwa dropped at word end
+const INDIC_NOTE = {
+  hi:"Each consonant carries an a unless a vowel sign changes it; Hindi drops the final a (सड़क = saṛak).",
+  mr:"Same letters as Hindi plus ळ (ḷ). Each consonant carries an a; the final one is silent.",
+  ne:"Same letters as Hindi. Each consonant carries an a; the final one is usually silent.",
+  bn:"The inherent vowel sounds like o: কলকাতা kalakātā is said Kolkata.",
+  as:"Bengali letters with ৰ (r) and ৱ (w); the inherent vowel sounds like o.",
+  pa:"ੰ (tippi) and ਂ nasalise, ੱ (addak) doubles the next consonant.",
+  gu:"Devanagari without the top bar; the final a is silent.",
+  or:"The inherent vowel sounds like o (ɔ).",
+  ta:"No voiced/aspirated letters: க is k or g. The dot ் (pulli) kills the vowel.",
+  te:"The tick on top is the inherent a; ్ kills it.",
+  kn:"Very close to Telugu; ್ kills the inherent a.",
+  ml:"Chillu letters (ൻ ർ ൽ ൾ ൺ) are consonants with no vowel, common at word end."
+};
+function rangeList(spec){
+  return spec.split(",").flatMap(p => {
+    const [a, b] = p.split("-").map(x => parseInt(x, 16));
+    return b ? Array.from({length: b - a + 1}, (_, i) => a + i) : [a];
+  });
+}
+function indicMaps(id){
+  const base = INDIC_BASE[id], set = INDIC_SET[id];
+  const cons = {}, vow = {}, mat = {}, sig = {};
+  rangeList(set.c).forEach(o => cons[String.fromCodePoint(base + o)] = IC[o]);
+  set.v.forEach(o => { if(IV[o]) vow[String.fromCodePoint(base + o)] = IV[o]; });
+  set.m.forEach(o => mat[String.fromCodePoint(base + o)] = IM[o]);
+  Object.entries(ISIGN).forEach(([o, r]) => sig[String.fromCodePoint(base + +o)] = r);
+  (INDIC_EXTRA[id] || []).forEach(([cp, r]) => {
+    const ch = String.fromCodePoint(cp), short = r.split(" ")[0];
+    if(r.startsWith("ṁ")) sig[ch] = "ṁ";
+    else if(r.startsWith("double")) sig[ch] = "";
+    else if(/final|no vowel/.test(r)) sig[ch] = short;
+    else cons[ch] = short;
+  });
+  /* Bengali's ড় etc. also come as letter + nukta; all scripts share digits */
+  return {cons, vow, mat, sig, virama: String.fromCodePoint(base + 0x4D), nukta: String.fromCodePoint(base + 0x3C), base};
+}
+
+/* ---------- Sinhala: its own layout, same logic ---------- */
+const SINHALA = {
+  vow:{"අ":"a","ආ":"ā","ඇ":"æ","ඈ":"ǣ","ඉ":"i","ඊ":"ī","උ":"u","ඌ":"ū","එ":"e","ඒ":"ē","ඔ":"o","ඕ":"ō","ඓ":"ai","ඖ":"au"},
+  cons:{"ක":"k","ඛ":"kh","ග":"g","ඝ":"gh","ඟ":"ṅg","ච":"c","ජ":"j","ඤ":"ñ","ට":"ṭ","ඩ":"ḍ","ඬ":"ṇḍ","ණ":"ṇ","ත":"t","ථ":"th",
+    "ද":"d","ධ":"dh","ඳ":"nd","න":"n","ප":"p","ඵ":"ph","බ":"b","භ":"bh","ම":"m","ඹ":"mb","ය":"y","ර":"r","ල":"l","ව":"v",
+    "ශ":"ś","ෂ":"ṣ","ස":"s","හ":"h","ළ":"ḷ","ෆ":"f"},
+  mat:{"ා":"ā","ැ":"æ","ෑ":"ǣ","ි":"i","ී":"ī","ු":"u","ූ":"ū","ෘ":"ru","ෙ":"e","ේ":"ē","ෛ":"ai","ො":"o","ෝ":"ō","ෞ":"au"},
+  sig:{"ං":"ṁ","ඃ":"ḥ"}, virama:"්", nukta:""
+};
+
+/* consonant + inherent a, vowel signs replace it, virama removes it */
+function abugida(text, M, dropFinal){
+  let out = "", pend = false;
+  const flush = () => { if(pend){ out += "a"; pend = false; } };
+  for(const ch of text.normalize("NFC")){
+    if(M.cons[ch] !== undefined){ flush(); out += M.cons[ch]; pend = true; }
+    else if(ch === M.nukta && pend){
+      const m = out.match(/(kh|ḍh|ph|k|g|j|ḍ|y)$/);
+      if(m && NUKTA[m[1]]) out = out.slice(0, -m[1].length) + NUKTA[m[1]];
+    }
+    else if(M.mat[ch] !== undefined){ out += M.mat[ch]; pend = false; }
+    else if(ch === M.virama){ pend = false; }
+    else if(M.vow[ch] !== undefined){ flush(); out += M.vow[ch]; }
+    else if(M.sig[ch] !== undefined){ flush(); out += M.sig[ch]; }
+    else if(ch === "‍" || ch === "‌"){ }
+    else if(M.base && ch.codePointAt(0) >= M.base + 0x66 && ch.codePointAt(0) <= M.base + 0x6F){ flush(); out += ch.codePointAt(0) - M.base - 0x66; }
+    else {
+      if(pend && dropFinal && /[\s\-.,·/]/.test(ch)){ pend = false; }
+      flush(); out += ch;
+    }
+  }
+  if(pend && !dropFinal) out += "a";
+  return out;
+}
+
+/* ---------- Hangul and kana ---------- */
+const H_INI = ["g","kk","n","d","tt","r","m","b","pp","s","ss","","j","jj","ch","k","t","p","h"];
+const H_MED = ["a","ae","ya","yae","eo","e","yeo","ye","o","wa","wae","oe","yo","u","wo","we","wi","yu","eu","ui","i"];
+const H_FIN = ["","k","k","k","n","n","n","t","l","k","m","l","l","l","p","l","m","p","p","t","t","ng","t","t","k","t","p","t"];
+function hangul(text){
+  let out = "";
+  for(const ch of text){
+    const c = ch.codePointAt(0) - 0xAC00;
+    if(c >= 0 && c < 11172){
+      const i = Math.floor(c / 588), m = Math.floor((c % 588) / 28), f = c % 28;
+      out += H_INI[i] + H_MED[m] + H_FIN[f];
+    } else out += ch;
+  }
+  return out;
+}
+const KANA_ROWS = [["a","i","u","e","o"],["ka","ki","ku","ke","ko"],["sa","shi","su","se","so"],["ta","chi","tsu","te","to"],
+  ["na","ni","nu","ne","no"],["ha","hi","fu","he","ho"],["ma","mi","mu","me","mo"],["ya","","yu","","yo"],
+  ["ra","ri","ru","re","ro"],["wa","","","","wo"]];
+const HIRA = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもや　ゆ　よらりるれろわ　　　を";
+const KATA = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤ　ユ　ヨラリルレロワ　　　ヲ";
+const KANA = {};
+[HIRA, KATA].forEach(set => [...set].forEach((ch, i) => { const r = KANA_ROWS[Math.floor(i/5)][i%5]; if(r) KANA[ch] = r; }));
+Object.assign(KANA, {"ん":"n","ン":"n","が":"ga","ぎ":"gi","ぐ":"gu","げ":"ge","ご":"go","ざ":"za","じ":"ji","ず":"zu","ぜ":"ze","ぞ":"zo",
+  "だ":"da","で":"de","ど":"do","ば":"ba","び":"bi","ぶ":"bu","べ":"be","ぼ":"bo","ぱ":"pa","ぴ":"pi","ぷ":"pu","ぺ":"pe","ぽ":"po",
+  "ガ":"ga","ギ":"gi","グ":"gu","ゲ":"ge","ゴ":"go","ザ":"za","ジ":"ji","ズ":"zu","ゼ":"ze","ゾ":"zo","ダ":"da","デ":"de","ド":"do",
+  "バ":"ba","ビ":"bi","ブ":"bu","ベ":"be","ボ":"bo","パ":"pa","ピ":"pi","プ":"pu","ペ":"pe","ポ":"po","ヴ":"vu","ー":"-"});
+const KANA_SMALL = {"ゃ":"ya","ゅ":"yu","ょ":"yo","ャ":"ya","ュ":"yu","ョ":"yo"};
+function kana(text){
+  let out = "", gem = false;
+  for(const ch of text){
+    if(ch === "っ" || ch === "ッ"){ gem = true; continue; }
+    if(KANA_SMALL[ch] && /i$/.test(out)){
+      out = out.slice(0, -1); const y = KANA_SMALL[ch];
+      out += /(sh|ch|j)$/.test(out) ? y.slice(1) : y; continue;
+    }
+    let r = KANA[ch];
+    if(r === undefined){ out += ch; gem = false; continue; }
+    if(gem){ r = r[0] + r; gem = false; }
+    out += r;
+  }
+  return out;
+}
+
+/* ---------- Thai, Lao, Khmer, Meitei: letter tables only ---------- */
+const TABLES = {
+  th:{cons:"ก k|ข kh|ค kh|ฆ kh|ง ng|จ ch|ฉ ch|ช ch|ซ s|ฌ ch|ญ y|ฎ d|ฏ t|ฐ th|ฑ th|ฒ th|ณ n|ด d|ต t|ถ th|ท th|ธ th|น n|บ b|ป p|ผ ph|ฝ f|พ ph|ฟ f|ภ ph|ม m|ย y|ร r|ล l|ว w|ศ s|ษ s|ส s|ห h|ฬ l|อ (silent)|ฮ h",
+      vow:"ะ a|า ā|ิ i|ี ī|ึ ue|ื ue|ุ u|ู ū|เ e (written before)|แ ae (written before)|โ o (written before)|ใ ai (before)|ไ ai (before)|ำ am|่ ้ ๊ ๋ tones",
+      dig:"๐๑๒๓๔๕๖๗๘๙", note:"Vowels sit before, above, below or after the consonant they follow in speech: เ-ก is ke. Tone marks above do not change the letter."},
+  lo:{cons:"ກ k|ຂ kh|ຄ kh|ງ ng|ຈ ch|ສ s|ຊ s|ຍ ny|ດ d|ຕ t|ຖ th|ທ th|ນ n|ບ b|ປ p|ຜ ph|ຝ f|ພ ph|ຟ f|ມ m|ຢ y|ຣ r|ລ l|ວ w|ຫ h|ອ (silent)|ຮ h",
+      vow:"ະ a|າ ā|ິ i|ີ ī|ຶ ue|ື ue|ຸ u|ູ ū|ເ e (before)|ແ ae (before)|ໂ o (before)|ໄ ai (before)|ໃ ai (before)|ົ o|ຽ ia|ໍ o",
+      dig:"໐໑໒໓໔໕໖໗໘໙", note:"Thai logic with fewer letters: vowels before, above, below or after. ຫ before n, m, l (ໜ ໝ) only marks the tone."},
+  km:{cons:"ក k|ខ kh|គ k|ឃ kh|ង ng|ច ch|ឆ chh|ជ ch|ឈ chh|ញ nh|ដ d|ឋ th|ឌ d|ឍ th|ណ n|ត t|ថ th|ទ t|ធ th|ន n|ប b|ផ ph|ព p|ភ ph|ម m|យ y|រ r|ល l|វ v|ស s|ហ h|ឡ l|អ (silent)",
+      vow:"ា a|ិ e|ី ei|ឹ oe|ឺ eu|ុ o|ូ ou|ួ uo|ើ aeu|ឿ oea|ៀ ie|េ e (before)|ែ ae (before)|ៃ ai (before)|ោ ao|ៅ au|ំ m|ះ h",
+      dig:"០១២៣៤៥៦៧៨៩", note:"A second consonant is written small under the first (្ + letter): ភ្នំ = phnom. Vowels change sound with the consonant series."},
+  mni:{cons:"ꯀ k|ꯁ s|ꯂ l|ꯃ m|ꯄ p|ꯅ n|ꯆ ch|ꯇ t|ꯈ kh|ꯉ ng|ꯊ th|ꯋ w|ꯌ y|ꯍ h|ꯎ u|ꯏ i|ꯐ ph|ꯑ a|ꯒ g|ꯓ jh|ꯔ r|ꯕ b|ꯖ j|ꯗ d|ꯘ gh|ꯙ dh|ꯚ bh",
+      vow:"ꯥ ā|ꯤ i|ꯨ u|ꯦ e|ꯣ o|ꯩ ei|ꯧ ou|ꯪ ng", dig:"꯰꯱꯲꯳꯴꯵꯶꯷꯸꯹", note:"Usually printed next to English in Manipur."}
+};
+
+/* ---------- words that recur on signs ---------- */
+const SIGN_WORDS = {
+  ru:"улица|ulitsa|street;проспект|prospekt|avenue;шоссе|shosse|highway;город|gorod|town;область|oblastʹ|region;район|rayon|district;село|selo|village;выезд|vyezd|exit (road);центр|tsentr|centre",
+  uk:"вулиця|vulytsia|street;проспект|prospekt|avenue;місто|misto|town;область|oblastʹ|region;район|raion|district;село|selo|village;виїзд|vyyizd|exit (road);центр|tsentr|centre",
+  be:"вуліца|vulitsa|street;горад|horad|town;вобласць|voblastsʹ|region;раён|rayon|district;вёска|vyoska|village",
+  bg:"улица|ulitsa|street;булевард|bulevard|boulevard;град|grad|town;област|oblast|province;село|selo|village;център|tsentăr|centre;изход|izhod|exit",
+  sr:"улица|ulica|street;булевар|bulevar|boulevard;пут|put|road;град|grad|town;општина|opština|municipality;центар|centar|centre;излаз|izlaz|exit",
+  mk:"улица|ulica|street;булевар|bulevar|boulevard;пат|pat|road;град|grad|town;општина|opština|municipality;центар|centar|centre;излез|izlez|exit",
+  kk:"көшесі|köshesi|street (of);даңғылы|dañğyly|avenue;қаласы|qalasy|city (of);облысы|oblysy|region;ауданы|audany|district;ауылы|auyly|village",
+  ky:"көчөсү|köchösü|street (of);шаары|shaary|city (of);облусу|oblusu|region;району|rayonu|district;айылы|ayyly|village",
+  mn:"гудамж|gudamj|street;зам|zam|road;хот|khot|city;аймаг|aimag|province;сум|sum|district;төв|töv|centre",
+  el:"οδός|odos|street;λεωφόρος|leoforos|avenue;πόλη|poli|town;κέντρο|kentro|centre;έξοδος|exodos|exit;δήμος|dimos|municipality;περιφέρεια|periferia|region",
+  ka:"ქუჩა|kucha|street;გამზირი|gamziri|avenue;გზა|gza|road;ქალაქი|kalaki|town;სოფელი|sopeli|village;ცენტრი|tsentri|centre",
+  hy:"փողոց|poghots|street;պողոտա|poghota|avenue;քաղաք|kaghak|town;մարզ|marz|province;կենտրոն|kentron|centre",
+  he:"רחוב|rehov|street;שדרות|sderot|boulevard;כביש|kvish|road;צומת|tsomet|junction;מרכז|merkaz|centre;יציאה|yetsia|exit",
+  ar:"شارع|shāriʿ|street;طريق|ṭarīq|road;مدينة|madīna|city;مركز|markaz|centre;مخرج|makhraj|exit;دوار|dawwār|roundabout;جسر|jisr|bridge",
+  fa:"خیابان|khiyābān|street;بلوار|bolvār|boulevard;میدان|meydān|square;کوچه|kuche|lane;شهر|shahr|city;خروجی|khoruji|exit",
+  ur:"سڑک|saṛak|road;شاہراہ|shāhrāh|highway;بازار|bāzār|market;چوک|chowk|junction;شہر|shahr|city",
+  hi:"सड़क|saṛak|road;मार्ग|mārg|road, way;नगर|nagar|town;ज़िला|zilā|district;गाँव|gā̃v|village;चौक|cauk|junction;बाज़ार|bāzār|market;राष्ट्रीय राजमार्ग|rāṣṭrīya rājmārg|national highway",
+  mr:"रस्ता|rastā|road;मार्ग|mārg|road, way;नगर|nagar|town;जिल्हा|jilhā|district;गाव|gāv|village;चौक|cauk|junction;पेठ|peṭh|quarter, market",
+  ne:"सडक|saḍak|road;मार्ग|mārg|road, way;नगरपालिका|nagarpālikā|municipality;गाउँपालिका|gāũpālikā|rural municipality;चोक|cok|junction;बजार|bajār|market",
+  bn:"সড়ক|saṛak|road;রোড|roḍ|road;জেলা|jelā|district;উপজেলা|upajelā|sub-district;গ্রাম|grām|village;বাজার|bājār|market;মোড়|moṛ|junction",
+  as:"পথ|path|road;নগৰ|nagar|town;জিলা|jilā|district;গাঁও|gā̃o|village;বজাৰ|bajār|market",
+  pa:"ਸੜਕ|saṛak|road;ਮਾਰਗ|mārag|road, way;ਸ਼ਹਿਰ|shahir|city;ਜ਼ਿਲ੍ਹਾ|zilhā|district;ਪਿੰਡ|piṇḍ|village;ਚੌਕ|cauk|junction;ਬਾਜ਼ਾਰ|bāzār|market",
+  gu:"રસ્તો|rasto|road;માર્ગ|mārg|road, way;નગર|nagar|town;જિલ્લો|jillo|district;ગામ|gām|village;ચોક|cok|junction;બજાર|bajār|market",
+  or:"ରାସ୍ତା|rāstā|road;ମାର୍ଗ|mārga|road, way;ନଗର|nagara|town;ଜିଲ୍ଲା|jillā|district;ଛକ|chhaka|junction;ବଜାର|bajāra|market",
+  ta:"சாலை|sālai|road;தெரு|teru|street;நகர்|nagar|town;மாவட்டம்|māvaṭṭam|district;கிராமம்|kirāmam|village;சந்திப்பு|santippu|junction",
+  te:"రోడ్డు|roḍḍu|road;వీధి|vīdhi|street;నగరం|nagaram|city;జిల్లా|jillā|district;గ్రామం|grāmam|village;కూడలి|kūḍali|junction",
+  kn:"ರಸ್ತೆ|raste|road;ಬೀದಿ|bīdi|street;ನಗರ|nagara|city;ಜಿಲ್ಲೆ|jille|district;ಗ್ರಾಮ|grāma|village;ವೃತ್ತ|vṛtta|circle, roundabout",
+  ml:"റോഡ്|ṟōḍ|road;നഗരം|nagaraṁ|city;ജില്ല|jilla|district;കവല|kavala|junction;പാലം|pālaṁ|bridge",
+  si:"පාර|pāra|road;මාවත|māvata|avenue;නගරය|nagaraya|city;හන්දිය|handiya|junction;ගම|gama|village;පාලම|pālama|bridge",
+  th:"ถนน|thanon|road;ซอย|soi|lane;เมือง|mueang|town;อำเภอ|amphoe|district;จังหวัด|changwat|province;ทางหลวง|thang luang|highway;แยก|yaek|junction;สะพาน|saphan|bridge",
+  lo:"ຖະໜົນ|thanon|road;ເມືອງ|mueang|district;ແຂວງ|khwaeng|province;ບ້ານ|ban|village;ຂົວ|khua|bridge;ສາມແຍກ|sam yaek|T-junction",
+  km:"ផ្លូវ|phlov|road;ខេត្ត|khaet|province;ស្រុក|srok|district;ភូមិ|phum|village;ស្ពាន|spean|bridge;ផ្សារ|phsar|market",
+  ja:"駅|eki|station;市|shi|city;町|machi / chō|town;村|mura|village;県|ken|prefecture;国道|kokudō|national road;出口|deguchi|exit;入口|iriguchi|entrance",
+  ko:"로|-ro|avenue;길|-gil|street;시|si|city;군|gun|county;구|gu|district;동|dong|neighbourhood;역|yeok|station;출구|chulgu|exit",
+  zhs:"路|lù|road;街|jiē|street;市|shì|city;区|qū|district;县|xiàn|county;省|shěng|province;出口|chūkǒu|exit;高速|gāosù|expressway",
+  zht:"路|lù|road;街|jiē|street;市|shì|city;區|qū|district;縣|xiàn|county;鄉|xiāng|township;出口|chūkǒu|exit;國道|guódào|national road"
+};
+
+/* ---------- which reader for which language ---------- */
+function readerFor(d){
+  const id = d.id;
+  if(CYR[id]){ const m = {...CYR_BASE, ...(CYR[id].map || {})}; return s => mapChars(s, m, []); }
+  if(id === "el") return s => mapChars(s.normalize("NFD").replace(/[̀-ͯ]/g, ""), GREEK, GREEK_DI);
+  if(id === "ka") return s => mapChars(s, GEORGIAN, []);
+  if(id === "hy") return s => mapChars(s, ARMENIAN, ARMENIAN_DI);
+  if(id === "he") return s => s.split(/\s+/).map(w => [...w].map(c => HEBREW_TR[c] !== undefined ? HEBREW_TR[c] : c).join("-")).join("  ");
+  if(id === "ar" || id === "fa" || id === "ur")
+    return s => mapChars(s.replace(/[ً-ٰٟ]/g, "").replace(/(^|\s)ال/g, "$1al-"), ARABIC, []);
+  if(INDIC_BASE[id]){ const M = indicMaps(id); return s => abugida(s, M, INDIC_FINAL_A.has(id)); }
+  if(id === "si") return s => abugida(s, SINHALA, false);
+  if(id === "ko") return hangul;
+  if(id === "ja") return s => /[぀-ヿ]/.test(s) ? kana(s) : null;
+  return null;
+}
+function mapChars(s, map, di){
+  let out = "", i = 0;
+  const low = s.toLowerCase();
+  outer: while(i < s.length){
+    for(const [k, v] of di) if(low.startsWith(k, i)){ out += cap(v, s[i]); i += k.length; continue outer; }
+    const ch = s[i], l = low[i];
+    out += map[l] !== undefined ? cap(map[l], ch) : ch; i++;
+  }
+  return out;
+}
+const cap = (r, orig) => orig !== orig.toLowerCase() && r ? r[0].toUpperCase() + r.slice(1) : r;
+
+/* the alphabet as cells: [glyph, roman, kind] */
+function alphabetFor(d){
+  const id = d.id, dec = new Set(d.dec || []);
+  const cell = (g, r, k) => ({g, r, k: k || (dec.has(g) ? "dec" : "")});
+  if(CYR[id]){ const m = {...CYR_BASE, ...(CYR[id].map || {})};
+    return [{t:"Letters", cells:[...CYR[id].abc].map(c => cell(c.toUpperCase() + " " + c, m[c]))}]; }
+  if(id === "el") return [{t:"Letters", cells:Object.entries(GREEK).filter(([g]) => g !== "ς").map(([g, r]) => cell(g.toUpperCase() + " " + g, r))},
+    {t:"Pairs", cells:GREEK_DI.map(([g, r]) => cell(g, r))}];
+  if(id === "ka") return [{t:"Letters (no capitals)", cells:Object.entries(GEORGIAN).map(([g, r]) => cell(g, r))}];
+  if(id === "hy") return [{t:"Letters", cells:Object.entries(ARMENIAN).map(([g, r]) => cell(g.toUpperCase() + " " + g, r))}];
+  if(id === "he") return [{t:"Letters, read right to left (vowels mostly unwritten)", cells:Object.entries(HEBREW).map(([g, r]) => cell(g, r))}];
+  if(ARABIC_ABC[id]) return [{t:"Letters, read right to left (short vowels unwritten)", cells:[...ARABIC_ABC[id]].map(g => cell(g, ARABIC[g]))}];
+  if(INDIC_BASE[id]){
+    const M = indicMaps(id), ka = String.fromCodePoint(M.base + 0x15);
+    const extra = (INDIC_EXTRA[id] || []).map(([cp, r]) => cell(String.fromCodePoint(cp), r, "ext"));
+    return [
+      {t:"Vowels (word start)", cells:Object.entries(M.vow).map(([g, r]) => cell(g, r))},
+      {t:"Consonants (each carries an a)", cells:Object.entries(M.cons).filter(([g]) => !extra.some(e => e.g === g)).map(([g, r]) => cell(g, r + "a"))},
+      ...(extra.length ? [{t:"Letters of this language", cells:extra}] : []),
+      {t:"Vowel signs, on " + ka, cells:Object.entries(M.mat).map(([g, r]) => cell(ka + g, "k" + r))},
+      {t:"Digits", cells:Array.from({length:10}, (_, i) => cell(String.fromCodePoint(M.base + 0x66 + i), String(i)))}];
+  }
+  if(id === "si") return [{t:"Vowels", cells:Object.entries(SINHALA.vow).map(([g, r]) => cell(g, r))},
+    {t:"Consonants (each carries an a)", cells:Object.entries(SINHALA.cons).map(([g, r]) => cell(g, r + "a"))},
+    {t:"Vowel signs, on ක", cells:Object.entries(SINHALA.mat).map(([g, r]) => cell("ක" + g, "k" + r))}];
+  if(TABLES[id]){ const T = TABLES[id], split = s => s.split("|").map(x => { const i = x.indexOf(" "); return cell(x.slice(0, i), x.slice(i + 1)); });
+    return [{t:"Consonants", cells:split(T.cons)}, {t:"Vowel signs", cells:split(T.vow)},
+      {t:"Digits", cells:[...T.dig].map((g, i) => cell(g, String(i)))}]; }
+  if(id === "ja"){ const row = set => [...set].map((g, i) => cell(g, KANA_ROWS[Math.floor(i/5)][i%5])).filter(c => c.r);
+    return [{t:"Hiragana", cells:row(HIRA).concat([cell("ん","n")])}, {t:"Katakana (foreign words, names)", cells:row(KATA).concat([cell("ン","n")])}]; }
+  if(id === "ko") return [{t:"Consonants", cells:"ㄱ g/k|ㄴ n|ㄷ d/t|ㄹ r/l|ㅁ m|ㅂ b/p|ㅅ s|ㅇ (silent) / ng|ㅈ j|ㅊ ch|ㅋ k|ㅌ t|ㅍ p|ㅎ h|ㄲ kk|ㄸ tt|ㅃ pp|ㅆ ss|ㅉ jj".split("|").map(x => { const [g, ...r] = x.split(" "); return cell(g, r.join(" ")); })},
+    {t:"Vowels", cells:"ㅏ a|ㅑ ya|ㅓ eo|ㅕ yeo|ㅗ o|ㅛ yo|ㅜ u|ㅠ yu|ㅡ eu|ㅣ i|ㅐ ae|ㅔ e|ㅘ wa|ㅝ wo|ㅢ ui".split("|").map(x => { const [g, r] = x.split(" "); return cell(g, r); })}];
+  return null;
+}
+const SCRIPT_NOTE = id => CYR_NOTE[id] || INDIC_NOTE[id] || (TABLES[id] && TABLES[id].note) || ({
+  el:"Capitals on many signs drop the accents. η, ι, υ and the pairs ει, οι all sound i.",
+  ka:"No capital letters. Apostrophes mark the ejective (sharper) k', p', t'.",
+  he:"Read right to left. Vowels are mostly not written, so the readings below are consonants only: רחוב (r-ḥ-v) is rehov. ו and י often stand for o/u and i.",
+  ar:"Read right to left; letters join and change shape. ال at the start is the article al-. Short vowels are not written, so the readings below are skeletons: ا و ي also stand for ā ū ī.",
+  fa:"Arabic letters plus پ چ ژ گ; words end in ی rather than ي.",
+  ur:"Arabic letters plus ٹ ڈ ڑ (small ط on top), ں and the long final ے, usually in slanted Nastaliq.",
+  ja:"Kanji (Chinese characters) carry the meaning; kana spell grammar and foreign words. Romanisation covers kana only.",
+  ko:"Each block is one syllable: initial + vowel (+ final). 서울 = s-eo-u-l.",
+  si:"Every letter is a loop; ් removes the inherent a.",
+  zhs:"No alphabet: learn the characters of the sign words below. Simplified forms: 区 县 门 车 广.",
+  zht:"No alphabet: learn the characters of the sign words below. Traditional forms: 區 縣 門 車 廣."
+}[id]) || "";
+
+/* ---------- the sheet ---------- */
+let sheetLang = null, sheetChoices = [];
+function openSheet(id, choices){
+  const d = BY_ID[id]; if(!d) return;
+  sheetLang = id; sheetChoices = (choices && choices.length > 1) ? choices : [];
+  const grp = browseLangs(CAT_BY_K[browseCat]);
+  const col = colorsFor(grp.some(x => x.id === id) ? grp : DATA.filter(x => x.fam === d.fam))[id] || "var(--amber)";
+  const read = readerFor(d);
+  const font = `${d.font},'Noto Sans',sans-serif`;
+  const gl = (arr, cls) => arr.map(x => `<span class="glyph${cls}" style="font-family:${font}">${esc(x)}</span>`).join("");
+  let h = `<div class="sh-head" style="--c:${col}"><span class="sw"></span><div><h2>${esc(d.name)}</h2>` +
+    `<div class="pl">${esc(d.place)}${d.z.length ? " · " + esc(d.z.map(k => REGIONS[k].n).join(", ")) : ""}</div></div></div>`;
+  if(sheetChoices.length) h += `<div class="sh-tabs">This area: ` + sheetChoices.map(x =>
+    `<button class="chip" data-sid="${x}" aria-pressed="${x === id}">${esc(BY_ID[x].name)}</button>`).join("") + `</div>`;
+
+  const top = h; h = "";
+  /* 1. spot it */
+  h += `<section><h3>How to spot it</h3><p class="tl">${esc(d.tell)}</p><div class="glyphrow">`;
+  if(d.dec.length) h += `<span class="lbl">proves it</span>` + gl(d.dec, "");
+  if(d.sha.length) h += `<span class="lbl">narrows</span>` + gl(d.sha, " weak");
+  if(d.no.length) h += `<span class="lbl">never</span>` + d.no.map(x => `<span class="glyph neg">${esc(x)}</span>`).join("");
+  h += `</div>`;
+  const sib = VARIANTS.find(v => v.includes(id));
+  const conf = [...new Set((sib || []).concat(d.conf))].filter(x => x !== id && BY_ID[x]).slice(0, 6);
+  if(conf.length) h += `<div class="sh-conf"><span class="lbl">Not to confuse with</span>` + conf.map(x => {
+    const o = BY_ID[x];
+    return `<button class="cf" data-sid="${x}"><b>${esc(o.name)}</b>${o.dec.length ? ` <span style="font-family:${o.font},sans-serif">${esc(o.dec.slice(0, 5).join(" "))}</span>` : ""}</button>`;
+  }).join("") + `</div>`;
+  const cn = CONTRAST[d.fam];
+  if(cn) h += `<div class="sh-note"><h4>${esc(cn[0])}</h4>${cn.slice(1).map(p => `<p>${p}</p>`).join("")}</div>`;
+  h += `</section>`;
+
+  const spot = h; h = "";
+  /* 2. read it */
+  const abc = alphabetFor(d), note = SCRIPT_NOTE(id);
+  if(abc){
+    h += `<section><h3>Read it</h3>${note ? `<p class="tl">${esc(note)}</p>` : ""}`;
+    abc.forEach(g => {
+      h += `<h4>${esc(g.t)}</h4><div class="abc" style="font-family:${font}">` + g.cells.map(c =>
+        `<div class="ch ${c.k}"><b>${esc(c.g)}</b><i>${esc(c.r || "")}</i></div>`).join("") + `</div>`;
+    });
+    h += `</section>`;
+  } else if(note) h += `<section><h3>Read it</h3><p class="tl">${esc(note)}</p></section>`;
+
+  const readS = h; h = "";
+  /* 3. words on signs */
+  if(SIGN_WORDS[id]){
+    h += `<section><h3>Words on signs</h3><div class="words">` + SIGN_WORDS[id].split(";").map(w => {
+      const [n, r, m] = w.split("|");
+      return `<div class="w"><b style="font-family:${font}">${highlight(n, d)}</b><i>${esc(r)}</i><span>${esc(m)}</span></div>`;
+    }).join("") + `</div></section>`;
+  }
+
+  const words = h; h = "";
+  /* 4. every sample, read out */
+  const pool = [...new Set([].concat(d.p || [], d.w || [], d.s || []))];
+  if(pool.length){
+    h += `<section><h3>Real sign text</h3><div class="smps">` + pool.map(x => {
+      const r = read ? read(x) : null;
+      return `<div class="sm"><b style="font-family:${font}">${highlight(x, d)}</b>${r && r !== x ? `<i>${esc(r)}</i>` : ""}</div>`;
+    }).join("") + `</div></section>`;
+  }
+  const samples = h;
+  h = top + `<div class="cols"><div>${spot}${words}</div><div>${readS}</div><div>${samples}</div></div>`;
+  if(conf.length) h += `<div class="sh-foot"><button class="chip" id="sh-drill">Drill ${esc(d.name)} vs ${esc(BY_ID[conf[0]].name)}</button></div>`;
+
+  const body = $("#sheet-body");
+  body.innerHTML = h;
+  body.scrollTop = 0;
+  body.querySelectorAll("[data-sid]").forEach(b => b.onclick = () => openSheet(b.dataset.sid, sheetChoices.includes(b.dataset.sid) ? sheetChoices : []));
+  if($("#sh-drill")) $("#sh-drill").onclick = () => {
+    S.mode = "pair"; S.pair = [id, conf[0]]; save();
+    closeOverlays(); paintRail(); newRound();
+  };
+  $("#ov-sheet").classList.add("open");
+}
+
 $("#btn-drillcat").onclick = () => {
   S.cats = [browseCat]; save(); paintSettings(); closeOverlays(); newRound();
 };
