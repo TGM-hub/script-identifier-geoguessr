@@ -6,7 +6,7 @@
 <title>Sign Reader</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans:wght@400;600;700&family=Noto+Serif:wght@400;600&family=Noto+Sans+Arabic&family=Noto+Sans+Armenian&family=Noto+Sans+Bengali&family=Noto+Sans+Devanagari&family=Noto+Sans+Ethiopic&family=Noto+Sans+Georgian&family=Noto+Sans+Gujarati&family=Noto+Sans+Gurmukhi&family=Noto+Sans+Hebrew&family=Noto+Sans+JP&family=Noto+Sans+KR&family=Noto+Sans+Kannada&family=Noto+Sans+Khmer&family=Noto+Sans+Lao&family=Noto+Sans+Malayalam&family=Noto+Sans+Myanmar&family=Noto+Sans+SC&family=Noto+Sans+Sinhala&family=Noto+Sans+TC&family=Noto+Sans+Tamil&family=Noto+Sans+Telugu&family=Noto+Sans+Thai&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans:wght@400;600;700&family=Noto+Serif:wght@400;600&family=Noto+Sans+Arabic&family=Noto+Sans+Armenian&family=Noto+Sans+Bengali&family=Noto+Sans+Devanagari&family=Noto+Sans+Ethiopic&family=Noto+Sans+Georgian&family=Noto+Sans+Gujarati&family=Noto+Sans+Gurmukhi&family=Noto+Sans+Hebrew&family=Noto+Sans+JP&family=Noto+Sans+KR&family=Noto+Sans+Kannada&family=Noto+Sans+Khmer&family=Noto+Sans+Lao&family=Noto+Sans+Malayalam&family=Noto+Sans+Myanmar&family=Noto+Sans+SC&family=Noto+Sans+Sinhala&family=Noto+Sans+TC&family=Noto+Sans+Tamil&family=Noto+Sans+Telugu&family=Noto+Sans+Thai&family=Noto+Sans+Oriya&family=Noto+Sans+Meetei+Mayek&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#1B2127; --ink-2:#252D35; --ink-3:#333D47;
@@ -251,6 +251,11 @@ table.mx td.zero{color:#3D4750}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 .tgm-nav{display:inline-flex;gap:4px;align-items:center;margin-right:6px;flex:none}.tgm-nav>a{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:7px;border:1px solid currentColor;opacity:.5;color:inherit;text-decoration:none;font-size:14px;line-height:1}.tgm-nav>a:hover,.tgm-nav>a:focus-visible{opacity:1}
 .tgm-maps{position:relative;display:inline-block}.tgm-maps>summary{list-style:none;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:7px;border:1px solid currentColor;opacity:.5;cursor:pointer;font-size:14px;line-height:1}.tgm-maps>summary::-webkit-details-marker{display:none}.tgm-maps[open]>summary,.tgm-maps>summary:hover{opacity:1}.tgm-pop{position:absolute;top:34px;left:0;z-index:9999;width:min(360px,calc(100vw - 24px));background:#1b2229;color:#e8edf2;border:1px solid #3a4652;border-radius:10px;padding:10px 12px;box-shadow:0 8px 24px #0006;font:13px/1.35 system-ui,sans-serif;text-align:left}.tgm-pop b{display:block;font-size:13px;margin-bottom:6px}.tgm-pop a{display:inline;width:auto;height:auto;border:0;opacity:1;color:#e8edf2;text-decoration:none}.tgm-pop a:hover{color:#f2c94c}.tgm-pop li{display:flex;gap:8px;align-items:baseline;margin:4px 0}.tgm-pop ul{list-style:none;margin:0;padding:0}.tgm-pop .lv{flex:none;width:16px;text-align:center;font-size:11px;border:1px solid #4b5866;border-radius:3px;color:#9fb0bf}.tgm-pop .ml{margin-left:auto;flex:none;color:#9fb0bf;font-size:12px}
+#options .opt.hedge{opacity:.75;font-style:italic}
+#options .opt.hedge.on{opacity:1;outline:2px solid currentColor}
+#options .opt.hedged{outline:2px dashed currentColor}
+.hedgemsg{display:block;font-size:.9em;margin-bottom:4px}
+.hedgemsg.ok{color:#7cc7b4}.hedgemsg.half{color:#f2c94c}.hedgemsg.bad{color:#ef7d6b}
 </style>
 </head>
 <body>
@@ -313,6 +318,10 @@ table.mx td.zero{color:#3D4750}
       <div class="chips" id="gg-chips">
         <button class="chip" data-ggonly="1">GeoGuessr countries only</button>
         <button class="chip" data-ggonly="0">Every language</button>
+      </div>
+      <div class="chips" id="freq-chips" style="margin-top:7px">
+        <button class="chip" data-freq="1">As often as in GeoGuessr</button>
+        <button class="chip" data-freq="0">Equal odds</button>
       </div>
       <p style="margin-top:7px" id="gg-note"></p>
     </fieldset>
@@ -412,6 +421,199 @@ const F = {
   my:"'Noto Sans Myanmar'", sc:"'Noto Sans SC'", si:"'Noto Sans Sinhala'",
   tc:"'Noto Sans TC'", ta:"'Noto Sans Tamil'", te:"'Noto Sans Telugu'", th:"'Noto Sans Thai'"
 };
+
+/* ============================================================
+   CLUSTER REBUILD (2026-10-30) — new languages, clusters, frequency
+   New answers, each with its own diagnostic letters:
+   Cyrillic: Belarusian, Kyrgyz. India & neighbours: Marathi, Nepali
+   (Devanagari variants of Hindi), Assamese (Bengali variant), Odia,
+   Urdu, Meitei Mayek. European Latin: Serbian/Bosnian Latin,
+   Faroese, Luxembourgish, Maltese, Irish, Welsh, Basque, Galician.
+   Latin outside Europe: Indonesian/Malay, Tagalog, Afrikaans,
+   Swahili, Zulu. Meitei and Odia spellings are worth a second look.
+   ============================================================ */
+const NEW_LANGS = [
+{id:"be",name:"Belarusian",place:"Belarus",fam:"cyr",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"ў is Belarusian alone. It has і like Ukrainian but also ы and э like Russian, and never и, щ or ъ (an apostrophe stands in).",
+ conf:["ru","uk"],
+ s:["Мінск","Гомель","Магілёў","Віцебск","Гродна","Брэст","Бабруйск","Маладзечна","Наваполацк","Слуцк","Пінск","Ліда","вуліца Леніна"]},
+{id:"ky",name:"Kyrgyz",place:"Kyrgyzstan",fam:"cyr",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"ң, ө and ү together. Kazakh adds қ ғ ә ұ і; Mongolian has ө ү but no ң.",
+ conf:["kk","mn","ru"],
+ s:["Бишкек","Ош","Жалал-Абад","Каракол","Нарын","Талас","Токмок","Чолпон-Ата","Баткен","Өзгөн","Сүлүктү","Түп","Ленин көчөсү"]},
+{id:"mr",name:"Marathi",place:"Maharashtra, Goa (Konkani)",fam:"indic-n",font:"'Noto Sans Devanagari'",
+ tell:"Devanagari like Hindi, but ळ (absent from Hindi) gives it away, as do the endings -चा -ची -चे and रस्ता for 'road'.",
+ conf:["hi","ne"],
+ s:["कोल्हापूर","सोलापूर","पुणे","नाशिक","सातारा","ठाणे","कळंबोली","पनवेल","बारामती","सांगली","रत्नागिरी","महाबळेश्वर","नवी मुंबई","वळण"]},
+{id:"ne",name:"Nepali",place:"Nepal, Sikkim",fam:"indic-n",font:"'Noto Sans Devanagari'",
+ tell:"Devanagari like Hindi. Nepali writes सडक without the dot (Hindi सड़क), बजार (Hindi बाज़ार), and labels towns नगरपालिका / गाउँपालिका.",
+ conf:["hi","mr"],
+ s:["काठमाडौं","पोखरा","ललितपुर","भक्तपुर","विराटनगर","धरान","बुटवल","हेटौंडा","गान्तोक","नाम्ची","धुलिखेल नगरपालिका","गाउँपालिका","सडक"]},
+{id:"as",name:"Assamese",place:"Assam",fam:"indic-n",font:"'Noto Sans Bengali'",
+ tell:"Bengali alphabet with two letters of its own: ৰ (r with a slash) and ৱ (w). Bengali writes র and ব.",
+ conf:["bn"],
+ s:["গুৱাহাটী","ডিব্ৰুগড়","যোৰহাট","শিৱসাগৰ","তেজপুৰ","নগাঁও","বৰপেটা","দিছপুৰ","গোলাঘাট","বঙাইগাঁও","ধুবুৰী","তিনিচুকীয়া","চাৰিআলি"]},
+{id:"or",name:"Odia",place:"Odisha",fam:"indic-n",font:"'Noto Sans Oriya'",
+ tell:"Every letter wears a big round arc like an umbrella, and there is no top bar.",
+ conf:["bn","te","kn"],
+ s:["ଭୁବନେଶ୍ୱର","କଟକ","ପୁରୀ","ସମ୍ବଲପୁର","ବ୍ରହ୍ମପୁର","ବାଲେଶ୍ୱର","ରାଉରକେଲା","କୋଣାର୍କ","ଜାଜପୁର","ଭଦ୍ରକ","ବାରିପଦା","ଛକ"]},
+{id:"ur",name:"Urdu",place:"Jammu & Kashmir, Ladakh, Pakistan",fam:"sem",font:"'Noto Nastaliq Urdu'",serif:"'Noto Sans Arabic'",
+ tell:"Arabic script plus ٹ ڈ ڑ (a small ط on top), ں and the long final ے; often in slanted Nastaliq.",
+ conf:["ar","fa"],
+ s:["سرینگر","جموں","کرگل","اننت ناگ","بارہمولہ","سوپور","پہلگام","گلمرگ","کپواڑہ","لاہور","کراچی","سڑک"]},
+{id:"mni",name:"Meitei Mayek",place:"Manipur",fam:"indic-n",font:"'Noto Sans Meetei Mayek'",
+ tell:"A script of its own: upright, right angles and short vertical strokes. Only in Manipur, usually beside English.",
+ conf:["or","bn"],
+ s:["ꯏꯝꯐꯥꯜ","ꯃꯅꯤꯄꯨꯔ","ꯊꯧꯕꯥꯜ","ꯀꯥꯛꯆꯤꯡ","ꯃꯣꯏꯔꯥꯡ","ꯂꯝꯐꯦꯜ"]},
+{id:"srl",name:"Serbian / Bosnian (Latin)",place:"Serbia, Bosnia, Montenegro",fam:"lat-sla",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"Same alphabet as Croatian (č ć đ š ž, dž lj nj): letters cannot separate them. Serbia writes ekavian forms (reka, mleko) where Croatia writes rijeka, mlijeko.",
+ conf:["hr","sl"],
+ s:["Beograd","Novi Sad","Niš","Čačak","Kragujevac","Sarajevo","Banja Luka","Tuzla","Zenica","Podgorica","Nikšić","Užice","izlaz","ulica"]},
+{id:"fo",name:"Faroese",place:"Faroe Islands",fam:"lat-nor",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"ð with ø: Faroese. Icelandic has ð and þ but no ø; Danish has ø but no ð.",
+ conf:["is","da","nb"],
+ s:["Tórshavn","Klaksvík","Runavík","Fuglafjørður","Miðvágur","Sørvágur","Vestmanna","Eiði","Hoyvík","Gøta","Tvøroyri","Vágur"]},
+{id:"lb",name:"Luxembourgish",place:"Luxembourg",fam:"lat-ger",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"Luxembourg signs are mostly French and German; Luxembourgish shows in place names with ë, éi and ue (Lëtzebuerg, Ettelbréck, Uewerkuer).",
+ conf:["de","nl"],
+ s:["Lëtzebuerg","Esch-Uelzecht","Diekrech","Ettelbréck","Iechternach","Réimech","Déifferdeng","Péiteng","Mamer","Stroossen","Uewerkuer","Bartreng"]},
+{id:"af",name:"Afrikaans",place:"South Africa, Namibia",fam:"lat-ger",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"Looks Dutch, but writes y where Dutch writes ij, uses ê ë ô, and the article 'n.",
+ conf:["nl","de"],
+ s:["Kaapstad","Stellenbosch","Bloemfontein","Oos-Londen","Uitenhage","Paarl","Worcester","Uitgang","Hoofweg","Noord","Suid","Kerkstraat"]},
+{id:"mt",name:"Maltese",place:"Malta",fam:"lat-eu",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"ħ, ġ, ċ and the digraph għ are Maltese alone (ż is shared only with Polish). Articles il-, ix-, iż- glued to place names.",
+ conf:["it","pl"],
+ s:["Ħal Qormi","Il-Ħamrun","Iż-Żebbuġ","Għajnsielem","Ir-Rabat","Iż-Żurrieq","Marsaxlokk","Ix-Xgħajra","Ħaż-Żabbar","L-Imġarr","Is-Siġġiewi","Ħal Għaxaq"]},
+{id:"ga",name:"Irish",place:"Ireland",fam:"lat-eu",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"Accents (á é í ó ú) on almost every word, plus an h after consonants: bh, mh, dh, ch, gh, fh. Shown above English on Irish signs.",
+ conf:["cy","gl"],
+ s:["Baile Átha Cliath","Gaillimh","Corcaigh","Luimneach","Port Láirge","Cill Chainnigh","Dún Dealgan","An Daingean","Leitir Ceanainn","Sligeach","Trá Lí","Cluain Meala"]},
+{id:"cy",name:"Welsh",place:"Wales",fam:"lat-eu",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"w and y used as vowels, the doubles ll dd ff, and ŵ ŷ. Paired with English on Welsh signs.",
+ conf:["ga"],
+ s:["Caerdydd","Abertawe","Casnewydd","Aberystwyth","Llanelli","Caernarfon","Pen-y-bont ar Ogwr","Wrecsam","Merthyr Tudful","Llandudno","Dolgellau","Araf"]},
+{id:"eu",name:"Basque",place:"Basque Country, Navarre",fam:"lat-eu",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"tx and tz, k everywhere (no c or qu), endings -ko, -ak, -etxea. Paired with Spanish.",
+ conf:["es","ca"],
+ s:["Donostia","Bilbo","Gasteiz","Iruñea","Errenteria","Hondarribia","Lekeitio","Zarautz","Getxo","Ondarroa","Elgoibar","Irteera"]},
+{id:"gl",name:"Galician",place:"Galicia",fam:"lat-rom",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"Between Portuguese and Spanish: ñ like Spanish but no ã õ ç, rúa and praza, and x where Spanish writes j (Xunta, Xinzo).",
+ conf:["pt","es"],
+ s:["A Coruña","Ourense","Pontevedra","Ribeira","Sanxenxo","Xinzo de Limia","Vilagarcía de Arousa","Ferrol","Monforte de Lemos","O Porriño","A Estrada","Rúa do Vilar"]},
+{id:"id",name:"Indonesian / Malay",place:"Indonesia, Malaysia, Singapore",fam:"lat-world",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"No diacritics. Jalan / Jl., Kabupaten, Kecamatan, Desa (Indonesia); Jalan, Bandar, Kampung (Malaysia). Endings -kan and -an.",
+ conf:["tl","sw"],
+ s:["Kabupaten Sleman","Kecamatan Depok","Jalan Sudirman","Jl. Diponegoro","Simpang Lima","Pasar Baru","Kuala Lumpur","Sungai Petani","Bandar Baru","Desa Wisata","Gang Melati","Kampung Baru"]},
+{id:"tl",name:"Tagalog / Filipino",place:"Philippines",fam:"lat-world",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"ng and mga everywhere; Barangay, Lungsod (city), Daan (road); Bawal (forbidden), Maligayang pagdating (welcome).",
+ conf:["id","es"],
+ s:["Lungsod ng Maynila","Barangay San Isidro","Maligayang Pagdating","Bawal Pumarada","Daang Maharlika","Lalawigan ng Bulacan","Bayan ng Calamba","Mag-ingat","Sentro ng Bayan","Bawal Tumawid"]},
+{id:"sw",name:"Swahili",place:"Kenya, Uganda, Tanzania",fam:"lat-world",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"Nouns start with class prefixes m-, wa-, ki-, vi- (Mtaa, Kituo, Wanafunzi); words end in vowels; ya, wa, cha link the words.",
+ conf:["zu","id"],
+ s:["Barabara ya Mombasa","Mtaa wa Kenyatta","Karibu Nairobi","Kituo cha Polisi","Shule ya Msingi","Hospitali ya Wilaya","Soko la Mji","Kaunti ya Nakuru","Punguza Mwendo","Hatari"]},
+{id:"zu",name:"Zulu",place:"KwaZulu-Natal, South Africa",fam:"lat-world",font:"'Noto Sans'",serif:"'Noto Serif'",
+ tell:"Prefixes with a capital in the middle (eThekwini, uMgungundlovu, KwaZulu), hl and dl, and the click letters q, x, c.",
+ conf:["sw","af"],
+ s:["eThekwini","uMgungundlovu","KwaDukuza","eMalahleni","Ulundi","Mtubatuba","eMpangeni","Hluhluwe","Isikole","Umgwaqo","Phuma","Ngena"]}
+];
+const NL_AUG = {
+be:{m:"ў,і,ы,э",no:"и,щ,ъ,ї,є",w:["вуліца","выхад","праспект","аптэка","цэнтр"],r:"М1"},
+ky:{m:"ң,ө,ү",no:"қ,ғ,ә,ұ,і,һ",w:["көчөсү","чыгуу","кирүү","дарыкана","борбор"],r:"ЭМ-02"},
+mr:{m:"ळ,चा,ची,चे",no:"ड़,ढ़",w:["रस्ता","मार्ग","चौक","बाजार","शाळा"],r:"NH 48",dg:"०१२३४५६७८९"},
+ne:{m:"पालिका,सडक,बजार",no:"ळ,ड़",w:["सडक","चोक","मार्ग","बजार"],r:"NH 10",dg:"०१२३४५६७८९"},
+as:{m:"ৰ,ৱ",no:"র",w:["পথ","বজাৰ","ৰাস্তা","চাৰিআলি"],r:"NH 27",dg:"০১২৩৪৫৬৭৮৯"},
+or:{m:"",no:"",w:["ଛକ","ରାସ୍ତା","ବଜାର","ମାର୍ଗ"],r:"NH 16",dg:"୦୧୨୩୪୫୬୭୮୯"},
+ur:{m:"ٹ,ڈ,ڑ,ں,ے,ھ",no:"ة,ى",w:["سڑک","بازار","چوک","شاہراہ"],r:"NH 44",dg:"۰۱۲۳۴۵۶۷۸۹"},
+mni:{m:"",no:"",w:[],r:"NH 102"},
+srl:{m:"ć,đ,dž",no:"ř,ł,ä,ő",w:["izlaz","ulica","bulevar","centar"],r:"A1"},
+fo:{m:"ð,ø,ó,í,ú,á,ý",no:"þ,å,ä,ö",w:["vegur","gøta"],r:""},
+lb:{m:"ë,éi,ue,ie",no:"ß,ij,ö",w:["Strooss","Gare","Uertschaft"],r:"A1"},
+af:{m:"ê,ë,ô,'n,y,ui",no:"ij,ß,ä",w:["Uitgang","Straat","Weg","Ingang"],r:"N1"},
+mt:{m:"ħ,ġ,ċ,għ,ż",no:"ł,ą,ñ",w:["Triq","Ħruġ","Pjazza"],r:""},
+ga:{m:"á,é,í,ó,ú,bh,mh,dh,ch,gh,fh",no:"w,ŵ,ñ",w:["Bóthar","Sráid","Lár","Géill Slí"],r:"N17"},
+cy:{m:"ll,dd,ff,ŵ,ŷ,w,y",no:"á,ó,bh",w:["Araf","Ffordd","Allan","Heol","Stryd"],r:"A470"},
+eu:{m:"tx,tz,k,etxe,ko",no:"ç,qu,ã",w:["Kalea","Irteera","Etorbidea","Sarrera"],r:"AP-8"},
+gl:{m:"x,rúa,praza,ñ",no:"ã,õ,ç,j",w:["Rúa","Praza","Saída","Estrada"],r:"AP-9"},
+id:{m:"Jl.,Jalan,Kabupaten,Kecamatan,Desa,Kampung,Simpang",no:"á,é,ñ",w:["Keluar","Masuk","Jalan","Pasar","Kantor"],r:""},
+tl:{m:"ng,mga,Barangay,Bawal,Lungsod,Maligayang",no:"ç,ß",w:["Daan","Bawal","Kalye","Labasan"],r:""},
+sw:{m:"mb,nd,ny,ya,wa,cha,mt,mw",no:"á,ñ,hl",w:["Barabara","Mtaa","Kutoka","Hatari"],r:"A104"},
+zu:{m:"hl,dl,eTh,uM,Kwa,q,x",no:"á,ñ,ij",w:["Umgwaqo","Phuma","Ngena","Isikole"],r:"N2"}
+};
+const NL_MORE = {
+be:["Жлобін","Салігорск","Барысаў","Орша","Мазыр","Светлагорск","Рэчыца","Ваўкавыск"],
+ky:["Кара-Балта","Кызыл-Кыя","Балыкчы","Кочкор","Кант","Ноокат","Карабалта","Таш-Көмүр"],
+mr:["अहमदनगर","जळगाव","लोणावळा","भिवंडी","अलिबाग","चिपळूण","कल्याण","डोंबिवली"],
+ne:["जनकपुर","नेपालगञ्ज","इटहरी","दमक","गोरखा","तानसेन","बीरगञ्ज","भरतपुर"],
+as:["নলবাৰী","মঙলদৈ","লখিমপুৰ","কৰিমগঞ্জ","হাফলং","শিলচৰ","কোকৰাঝাৰ","গোৱালপাৰা"],
+or:["କୋରାପୁଟ","ପାରାଦୀପ","ଝାରସୁଗୁଡ଼ା","କେନ୍ଦୁଝର","ଢେଙ୍କାନାଳ","ଗଞ୍ଜାମ","ବଲାଙ୍ଗୀର","ଖୋର୍ଦ୍ଧା"],
+ur:["راولپنڈی","ملتان","پشاور","فیصل آباد","سیالکوٹ","بڈگام","ادھم پور","کٹھوعہ"],
+srl:["Subotica","Kraljevo","Šabac","Smederevo","Bijeljina","Prijedor","Budva","Herceg Novi"],
+fo:["Saltangará","Hvalba","Sandavágur","Kollafjørður","Nólsoy","Viðareiði","Skála","Leirvík"],
+lb:["Wolz","Clierf","Rëmeleng","Monnerech","Suessem","Bieles","Gréiwemaacher","Miersch"],
+af:["Oudtshoorn","Kuilsrivier","Vredenburg","Piketberg","Laingsburg","Beaufort-Wes","Swellendam","Kaapse Vlakte"],
+mt:["Ħal Tarxien","Il-Mellieħa","Ix-Xagħra","Il-Gżira","Ta' Xbiex","Ħal Kirkop","Il-Fgura","Ħal Luqa"],
+ga:["Ceatharlach","Inis","Tulach Mhór","An Uaimh","Ros Comáin","Béal an Átha","Cill Airne","Dún na nGall"],
+cy:["Abergwaun","Aberhonddu","Y Fenni","Hwlffordd","Caerfyrddin","Pwllheli","Porthmadog","Y Drenewydd"],
+eu:["Arrasate","Azpeitia","Tolosa","Eibar","Bermeo","Gernika","Basauri","Lizarra"],
+gl:["Carballo","Betanzos","Vilalba","Chantada","Sarria","Noia","Cangas","Ribadeo"],
+id:["Kota Bandung","Kabupaten Bogor","Jalan Gajah Mada","Pelabuhan Ratu","Sungai Buloh","Kota Bharu","Pasar Minggu","Tanjung Priok"],
+tl:["Lungsod Quezon","Lalawigan ng Batangas","Barangay Malinis","Bayan ng Taytay","Daang Hari","Bawal Magtapon ng Basura","Mabuhay","Paaralang Elementarya"],
+sw:["Mtaa wa Moi","Barabara ya Thika","Kituo cha Mafuta","Shule ya Upili","Ofisi ya Kaunti","Njia ya Waenda kwa Miguu","Mji wa Kale","Karibu Kisumu"],
+zu:["eMkhondo","oPhongolo","eShowe","KwaMashu","uMlazi","eSikhawini","oThongathi","uMhlathuze"]
+};
+const NL_GEO = {
+be:[[53.9,27.57,"Belarus"]], ky:[[42.87,74.6,"Kyrgyzstan"]],
+mr:[[18.52,73.86,"Maharashtra"]], ne:[[27.7,85.32,"Nepal"],[27.33,88.61,"Sikkim"]],
+as:[[26.14,91.74,"Assam"]], or:[[20.3,85.82,"Odisha"]], mni:[[24.8,93.94,"Manipur"]],
+ur:[[34.08,74.8,"Kashmir"],[31.55,74.34,"Pakistan"]],
+srl:[[44.79,20.45,"Serbia"],[43.86,18.41,"Bosnia"],[42.44,19.26,"Montenegro"]],
+fo:[[62.01,-6.77,"Faroe Islands"]], lb:[[49.61,6.13,"Luxembourg"]], af:[[-33.93,18.86,"Western Cape"]],
+mt:[[35.9,14.48,"Malta"]], ga:[[53.27,-9.05,"Ireland"]], cy:[[52.4,-3.8,"Wales"]],
+eu:[[43.26,-2.4,"Basque Country"]], gl:[[42.8,-8.0,"Galicia"]],
+id:[[-6.2,106.85,"Indonesia"],[3.14,101.69,"Malaysia"]], tl:[[14.6,120.98,"Philippines"]],
+sw:[[-1.29,36.82,"Kenya"],[-6.8,39.28,"Tanzania"]], zu:[[-29.0,31.0,"KwaZulu-Natal"]]
+};
+/* Families regrouped into clusters of look-alikes */
+const FAM2 = {
+  hi:"indic-n", bn:"indic-n", pa:"indic-n", gu:"indic-n",
+  ta:"indic-s", te:"indic-s", kn:"indic-s", ml:"indic-s", si:"indic-s",
+  hu:"lat-eu", tr:"lat-eu", az:"lat-eu", sq:"lat-eu", vi:"lat-world"
+};
+/* Same script, different language: with no decisive letter on screen,
+   any member of the group is an honest answer. */
+const VARIANTS = [["hi","mr","ne"],["bn","as"]];
+/* Where each language is on signs, for frequency weighting (ISO codes) */
+const LANG_CC = {
+ru:"RU KZ KG",be:"BY",uk:"UA",bg:"BG",sr:"RS BA ME",mk:"MK",mn:"MN",kk:"KZ",ky:"KG",
+el:"GR CY",ka:"GE",hy:"AM",ar:"AE JO QA LB TN PS IL EG OM",fa:"IR",he:"IL",am:"ET",ur:"IN PK",
+th:"TH",lo:"LA",km:"KH",my:"MM",
+hi:"IN",mr:"IN",ne:"NP IN",bn:"BD IN",as:"IN",or:"IN",pa:"IN",gu:"IN",mni:"IN",
+ta:"IN LK SG",te:"IN",kn:"IN",ml:"IN",si:"LK",
+zhs:"SG MY",zht:"TW HK MO",ja:"JP",ko:"KR",
+pl:"PL",cs:"CZ",sk:"SK",hr:"HR BA",srl:"RS BA ME",sl:"SI",sq:"AL MK",
+lv:"LV",lt:"LT",et:"EE",fi:"FI",sv:"SE FI",nb:"NO",da:"DK",is:"IS",fo:"FO",
+es:"ES MX AR CL CO PE EC BO UY GT DO PA PR",pt:"PT BR",fr:"FR BE CH LU MC RE SN CA TN",it:"IT CH SM",
+ca:"ES AD",gl:"ES",ro:"RO",de:"DE AT CH LU LI BE",nl:"NL BE CW",lb:"LU",af:"ZA",
+hu:"HU",tr:"TR",az:"AZ",mt:"MT",ga:"IE",cy:"GB",eu:"ES",
+vi:"VN",id:"ID MY SG",tl:"PH",sw:"KE UG",zu:"ZA"
+};
+const TIER_DEF = {};
+[["US CA MX BR AR CL CO PE AU NZ JP KR ID PH MY TH IN RU UA TR ZA FR ES IT DE GB PL RO SE NO FI",1],
+ ["PT IE NL BE CH AT CZ SK HU SI HR RS BG GR AL MK ME DK EE LV LT IS TW VN KH LA LK BD KZ KG MN EC BO UY GT DO PA PR KE NG GH SN UG BW TN IL JO AE",2],
+ ["AD MC SM LI LU MT GI JE IM FO GL BM CW VI GU MP AS HK MO SG QA LB PS BT LS SZ RW RE MG CX CC GE BA CY",3]]
+  .forEach(([l,t]) => l.split(" ").forEach(k => TIER_DEF[k] = t));
+/* How often GeoGuessr shows the language: sum of its countries' tier weights.
+   Tier weights and per-country overrides come from City Placer's settings
+   (same origin, so the same localStorage), defaults 4 / 2 / 1 / 0. */
+function freqMult(id){
+  let P = {}; try { P = JSON.parse(localStorage.getItem("cp.prefs") || "{}"); } catch(e){}
+  const TW = Object.assign({1:4,2:2,3:1,4:0}, P.tierW || {}), OV = P.tierOv || {};
+  const f = (LANG_CC[id] || "").split(" ").filter(Boolean)
+    .reduce((s, cc) => s + (+TW[+(OV[cc] || TIER_DEF[cc] || 4)] || 0), 0);
+  return Math.max(0.3, Math.min(2.5, Math.sqrt(f) / 1.4));
+}
 
 const DATA = [
 /* ---------- Cyrillic ---------- */
@@ -672,6 +874,16 @@ const DATA = [
 ];
 
 /* auto-symmetrise the confusion graph */
+DATA.push(...NEW_LANGS);
+DATA.forEach(d => { if (FAM2[d.id]) d.fam = FAM2[d.id]; });
+(() => {
+  const r = id => DATA.find(d => d.id === id);
+  Object.assign(r("hi"), {name:"Hindi", place:"North and central India",
+    tell:"Devanagari with a full bar on top. Hindi has ड़ ढ़ with a dot below (सड़क, बाज़ार) and no ळ (Marathi); with neither on screen it could be Marathi or Nepali too.",
+    s: r("hi").s.map(x => x === "काठमाडौँ" ? "गोरखपुर" : x)});
+  r("ru").place = "Russia (also Kazakhstan, Kyrgyzstan)";
+  r("bn").tell += " Assamese uses the same letters plus ৰ and ৱ: Bengali has র and ব instead.";
+})();
 const BY_ID = {};
 DATA.forEach(d => { BY_ID[d.id] = d; d.conf = d.conf.filter(c => c !== d.id); });
 DATA.forEach(d => d.conf.forEach(c => {
@@ -691,7 +903,7 @@ DATA.forEach(d => { d.conf = [...new Set(d.conf)].filter(c => BY_ID[c]); });
    r  — a plausible road designation.
    dg — local digits, used on sign blocks about half the time.
    ============================================================ */
-const AUG = {
+const AUG = {...NL_AUG,
 ru:{m:"э,ы,ъ,ё",no:"і,ї,є,ђ",w:["выход","ул.","аптека","стоп","Съезд на трассу","ул. Ленина, 12"],r:"М-4"},
 uk:{m:"і,ї,є,ґ",no:"ы,э,ъ",w:["вихід","вул.","аптека","їдальня"],r:"М-06"},
 bg:{m:"ъ",no:"ы,э,і,ё",w:["изход","бул.","аптека"],r:"АМ Тракия"},
@@ -710,7 +922,7 @@ th:{m:"",no:"",w:["ทางออก","ถนน","ห้ามจอด"],r:"�
 lo:{m:"",no:"",w:["ທາງອອກ","ຖະໜົນ"],r:"ທ ໑໓",dg:"໐໑໒໓໔໕໖໗໘໙"},
 km:{m:"",no:"",w:["ច្រកចេញ","ផ្លូវ"],r:"ផ្លូវជាតិលេខ ៦",dg:"០១២៣៤៥៦៧៨៩"},
 my:{m:"",no:"",w:["ထွက်ပေါက်","လမ်း"],r:"အမှတ် ၁",dg:"၀၁၂၃၄၅၆၇၈၉"},
-hi:{m:"",no:"",w:["निकास","सड़क","रुकें","सड़क बंद है"],r:"NH 44"},
+hi:{m:"ड़,ढ़",no:"ळ",w:["निकास","सड़क","रुकें","सड़क बंद है"],r:"NH 44",dg:"०१२३४५६७८९"},
 bn:{m:"",no:"",w:["প্রস্থান","সড়ক"],r:"N1",dg:"০১২৩৪৫৬৭৮৯"},
 pa:{m:"",no:"",w:["ਬਾਹਰ","ਸੜਕ","ਬਾਹਰ ਜਾਣ ਦਾ ਰਸਤਾ"],r:"NH 3"},
 gu:{m:"",no:"",w:["બહાર","રસ્તો","બહાર નીકળો"],r:"NH 48"},
@@ -800,7 +1012,7 @@ DATA.forEach(d => {
    the writing system. These are destinations only, and for Latin
    languages every one carries a diacritic or a morphological tell.
    ============================================================ */
-const MORE = {
+const MORE = {...NL_MORE,
 ru:["Владивосток","Красноярск","Челябинск","Ростов-на-Дону","Архангельск","Мурманск","Тюмень","Кемерово"],
 uk:["Одеса","Харків","Запоріжжя","Чернівці","Тернопіль","Ужгород","Полтава","Житомир"],
 bg:["Бургас","Стара Загора","Русе","Шумен","Хасково","Кърджали","Габрово","Ловеч"],
@@ -873,7 +1085,7 @@ DATA.forEach(d => {
    language carry several separate areas (Tamil: Tamil Nadu, northern
    Sri Lanka, Singapore). The view auto-frames around the points.
    ============================================================ */
-const GEO = {
+const GEO = {...NL_GEO,
 ru:[[55.75,37.62,"Russia"],[56.0,92.9,"Siberia"],[53.9,27.6,"Belarus"],[42.9,74.6,"Kyrgyzstan"]],
 uk:[[50.45,30.52,"Ukraine"]],
 bg:[[42.70,23.32,"Bulgaria"]],
@@ -892,7 +1104,7 @@ th:[[13.75,100.50,"Thailand"]],
 lo:[[17.97,102.60,"Laos"]],
 km:[[11.55,104.92,"Cambodia"]],
 my:[[16.87,96.20,"Myanmar"]],
-hi:[[28.61,77.21,"Hindi — Delhi, UP, Bihar"],[19.08,72.88,"Marathi — Maharashtra"],[27.72,85.32,"Nepali — Nepal"]],
+hi:[[28.61,77.21,"Delhi"],[26.85,80.95,"Uttar Pradesh"],[25.6,85.1,"Bihar"],[23.26,77.41,"Madhya Pradesh"]],
 bn:[[23.81,90.41,"Bangladesh"],[22.57,88.36,"West Bengal"]],
 pa:[[31.63,74.87,"Punjab (India)"]],
 gu:[[23.02,72.57,"Gujarat"]],
@@ -948,7 +1160,7 @@ DATA.forEach(d => {
 /* Pairs that short text genuinely cannot separate. Either answer counts,
    and the matrix records a hit — otherwise it shows permanent red that is
    not the reader's fault. */
-const EQUIV = [["nb","da"]];
+const EQUIV = [["nb","da"],["hr","srl"]];
 const EQ = {};
 EQUIV.forEach(g => g.forEach(id => EQ[id] = g));
 
@@ -958,6 +1170,7 @@ EQUIV.forEach(g => g.forEach(id => EQ[id] = g));
    Serbian and Greek all stay in. Simplified Chinese stays too: mainland China
    has no coverage, but Singapore and Malaysia do. */
 const NO_COVERAGE = {
+  be: "Belarus (one walking route in Minsk)",
   my: "Myanmar",
   fa: "Iran and Afghanistan",
   hy: "Armenia",
@@ -965,22 +1178,24 @@ const NO_COVERAGE = {
   am: "Ethiopia and Eritrea"
 };
 
-const LATIN_FAMS = new Set(["lat-sla","lat-bal","lat-nor","lat-rom","lat-ger","lat-oth"]);
+const LATIN_FAMS = new Set(["lat-sla","lat-bal","lat-nor","lat-rom","lat-ger","lat-eu","lat-world"]);
 /* Greek is a group of one, so it rides with the Caucasus scripts —
    otherwise selecting it alone would leave nothing to choose between. */
 const CATS = [
-  {k:"cyr",   label:"Cyrillic",          fams:["cyr"]},
-  {k:"greek", label:"Greek & Caucasus",  fams:["greek","cauc"]},
-  {k:"sem",   label:"Arabic & Semitic",  fams:["sem"]},
-  {k:"sea",   label:"South-East Asian",  fams:["sea"]},
-  {k:"indic", label:"Brahmic",           fams:["indic"]},
-  {k:"cjk",   label:"CJK",               fams:["cjk"]},
-  {k:"sla",   label:"Slavic (Latin)",    fams:["lat-sla"]},
-  {k:"bal",   label:"Baltic",            fams:["lat-bal"]},
-  {k:"nor",   label:"Nordic & Finnic",   fams:["lat-nor"]},
-  {k:"rom",   label:"Romance",           fams:["lat-rom"]},
-  {k:"ger",   label:"Germanic",          fams:["lat-ger"]},
-  {k:"oth",   label:"Other Latin",       fams:["lat-oth"]}
+  {k:"cyr",    label:"Cyrillic",                   fams:["cyr"]},
+  {k:"slav",   label:"Slavic (Latin)",             fams:["lat-sla"]},
+  {k:"bal",    label:"Baltic",                     fams:["lat-bal"]},
+  {k:"nor",    label:"Nordic & Finnic",            fams:["lat-nor"]},
+  {k:"ger",    label:"Germanic",                   fams:["lat-ger"]},
+  {k:"rom",    label:"Romance",                    fams:["lat-rom"]},
+  {k:"eur",    label:"Other European Latin",       fams:["lat-eu"]},
+  {k:"world",  label:"Latin outside Europe",       fams:["lat-world"]},
+  {k:"greek",  label:"Greek & Caucasus",           fams:["greek","cauc"]},
+  {k:"sem",    label:"Arabic, Urdu, Hebrew",       fams:["sem"]},
+  {k:"indicn", label:"North India & Bengal",       fams:["indic-n"]},
+  {k:"indics", label:"South India & Sri Lanka",    fams:["indic-s"]},
+  {k:"sea",    label:"South-East Asian",           fams:["sea"]},
+  {k:"cjk",    label:"East Asian",                 fams:["cjk"]}
 ];
 const CAT_BY_K = {}; CATS.forEach(c => CAT_BY_K[c.k] = c);
 const catFams = keys => keys.flatMap(k => CAT_BY_K[k] ? CAT_BY_K[k].fams : []);
@@ -989,8 +1204,8 @@ const catFams = keys => keys.flatMap(k => CAT_BY_K[k] ? CAT_BY_K[k].fams : []);
    CJK and South-East Asian have four members each — so this is the tier that
    stops the remaining options becoming free eliminations. */
 const LOOK = {
-  dense:   ["zhs","zht","ja","ko","ar","fa","he","am"],
-  brahmic: ["th","lo","km","my","si","ta","ml","te","kn","hi","bn","pa","gu","ka"]
+  dense:   ["zhs","zht","ja","ko","ar","fa","he","am","ur"],
+  brahmic: ["th","lo","km","my","si","ta","ml","te","kn","hi","bn","pa","gu","ka","mr","ne","as","or","mni"]
 };
 const LOOK_OF = {};
 for (const g in LOOK) LOOK[g].forEach(id => LOOK_OF[id] = g);
@@ -1002,7 +1217,7 @@ const lookPeers = id => DATA.filter(d => LOOK_OF[d.id] === LOOK_OF[id] && d.id !
    ============================================================ */
 /* Shown in Settings so a stale cached or undeployed copy is identifiable at a
    glance instead of being debugged as a logic fault. */
-const BUILD = "2026-09-24 · b8";
+const BUILD = "2026-10-30 · b9 clusters";
 const KEY = "signreader.v2";
 /* A saved setting always beats a new default, so changing DEFAULT_STATE alone
    never reaches anyone who has already played. Migrations run once and are
@@ -1169,6 +1384,53 @@ greek:["Greek",
  "Confusable with Cyrillic only at a glance: Cyrillic has no θ ξ ψ ω, and Greek has no ж ф ы ю я.",
  "Uppercase signage often drops the accents, which removes a useful cue."]
 };
+Object.assign(CONTRAST, {
+cyr:["Cyrillic, who adds what",
+ "<b>Ukrainian</b> owns ї є ґ. <b>Belarusian</b> owns ў, and mixes і (like Ukrainian) with ы э (like Russian); it never writes и or щ. <b>Russian</b> has ы э ъ ё and no і.",
+ "<b>Bulgarian</b> has ъ inside words (Търново) and never ы э і.",
+ "<b>Serbian</b> and <b>Macedonian</b> share ј љ њ џ. Only ђ ћ (Serbian) and ѕ ѓ ќ (Macedonian) split them.",
+ "Hooked letters: <b>Kazakh</b> қ ғ ә ұ і; <b>Kyrgyz</b> ң ө ү without those; <b>Mongolian</b> ө ү without ң.",
+ "Plain Cyrillic with no marker at all is most often Russian."],
+"lat-sla":["Latin-script Slavic",
+ "ř ě ů → <b>Czech</b>. ľ ĺ ŕ ô ä → <b>Slovak</b>. ł ą ę ż ź, szcz → <b>Polish</b>.",
+ "ć and đ → <b>Croatian</b> or <b>Serbian / Bosnian</b> written in Latin: same alphabet, the letters cannot split them. Ekavian reka, mleko points to Serbia; rijeka to Croatia, Bosnia, Montenegro.",
+ "<b>Slovenian</b> has only č š ž: it is identified by what is missing."],
+"lat-nor":["Nordic and Finnic",
+ "å → Swedish, Norwegian, Danish. æ ø → Norwegian, Danish (and Faroese). ä ö → Swedish, Finnish, Estonian.",
+ "þ → <b>Icelandic</b>. ð with ø → <b>Faroese</b>. õ → <b>Estonian</b>.",
+ "Norwegian and Danish cannot be split on letters: -dal -nes -fjord -vik are Norwegian, -by -lev -sted -bro Danish.",
+ "Finnish and Swedish together on one sign is <b>Finland</b>."],
+"lat-ger":["Germanic",
+ "ß and very long compounds → <b>German</b>. ij, doubled vowels and -dijk → <b>Dutch</b>.",
+ "Dutch-looking but y instead of ij, ê ë ô and 'n → <b>Afrikaans</b> (South Africa).",
+ "ë, éi, ue in place names (Lëtzebuerg, Ettelbréck) → <b>Luxembourgish</b>; the rest of Luxembourg's signs are French or German."],
+"lat-rom":["Romance",
+ "ñ → <b>Spanish</b> or <b>Galician</b>. ã õ → <b>Portuguese</b>. ç → Portuguese, French, Catalan, never Spanish or Galician.",
+ "Galician: x where Spanish writes j (Xunta, Xinzo), rúa and praza, articles o / a before names.",
+ "Final accented vowels à è ì ò ù → <b>Italian</b>. ș ț ă â î → <b>Romanian</b>. l·l → <b>Catalan</b>."],
+"lat-eu":["The rest of European Latin",
+ "ő ű, sz cs gy → <b>Hungarian</b>. ı İ ş ğ → <b>Turkish</b>; plus ə → <b>Azerbaijani</b>. ë and xh dh gj → <b>Albanian</b>.",
+ "ħ ġ ċ għ and il-/ix- before names → <b>Maltese</b>.",
+ "Accents everywhere plus bh mh dh ch → <b>Irish</b>. w and y as vowels, ll dd ff, ŵ ŷ → <b>Welsh</b>.",
+ "tx tz and k everywhere, -ko -ak -etxea → <b>Basque</b>."],
+"lat-world":["Latin outside Europe",
+ "Tone marks stacked on vowels plus đ → <b>Vietnamese</b>.",
+ "No accents, Jalan / Jl., Kabupaten, Desa, Kampung → <b>Indonesian / Malay</b>.",
+ "ng and mga everywhere, Barangay, Bawal → <b>Tagalog</b>.",
+ "Class prefixes m- wa- ki- (Mtaa, Kituo) and ya / wa / cha → <b>Swahili</b>. Capitals inside words (eThekwini, uMlazi), hl, q x → <b>Zulu</b>."],
+sem:["Arabic script, Hebrew, Ge'ez",
+ "Connected right-to-left cursive → <b>Arabic</b>, <b>Persian</b> or <b>Urdu</b>. Persian adds پ چ ژ گ; Urdu adds ٹ ڈ ڑ (small ط on top), ں and the long final ے, often in slanted Nastaliq.",
+ "Square letters with final forms ך ם ן ף ץ → <b>Hebrew</b>. Boxes on little legs → <b>Amharic</b>."],
+"indic-n":["North India and Bengal",
+ "Full bar on top, angular → Devanagari: <b>Hindi</b>, <b>Marathi</b> or <b>Nepali</b>. ळ → Marathi; ड़ with a dot → Hindi; सडक without dot, नगरपालिका → Nepali. With none of these, the text cannot decide.",
+ "Bar on top, rounder, triangles pointing left → <b>Bengali</b>; the same with ৰ ৱ → <b>Assamese</b>.",
+ "Bar broken between letters, square and soft → <b>Gurmukhi</b>. Devanagari shapes without the bar → <b>Gujarati</b>.",
+ "Big round arc over every letter, no bar → <b>Odia</b>. Upright, right angles, short verticals → <b>Meitei Mayek</b> (Manipur)."],
+"indic-s":["South India and Sri Lanka",
+ "No top bar, round letters. <b>Telugu</b> has small check marks on top; <b>Kannada</b> looks the same with a hook at the top right instead.",
+ "<b>Tamil</b>: right angles, few curves, dots above (pulli). <b>Malayalam</b>: inverted-U loops, letters joined.",
+ "<b>Sinhala</b>: all loops, like bubbles. Tamil alone in Sri Lanka points to the north or east."]
+});
 const contrastFor = d => CONTRAST[d.fam] || null;
 
 /* ============================================================
@@ -1309,6 +1571,13 @@ function acceptedFor(target, spec){
     if(d.id === target.id) return;
     if(strs.every(s => d.s.includes(s))) set.add(d.id);
   });
+  /* Hindi / Marathi / Nepali, Bengali / Assamese: one script. Without a
+     decisive letter on screen, a sibling that nothing on screen rules out
+     is an honest answer. */
+  const g = VARIANTS.find(v => v.includes(target.id));
+  if(g && !strs.some(p => hasDecisive(target, p)))
+    g.forEach(x => { const o = BY_ID[x];
+      if(o && !strs.some(p => o.no.some(n => n && p.includes(n)))) set.add(x); });
   return set;
 }
 
@@ -1356,7 +1625,8 @@ function renderMap(d){
 let round = null;
 
 function weightedPick(pool){
-  const eff = pool.map(d => w(d.id) * (isSettled(d.id) ? 0.45 : 1));
+  const fq = S.ggonly && S.freq !== false;
+  const eff = pool.map(d => w(d.id) * (isSettled(d.id) ? 0.45 : 1) * (fq ? freqMult(d.id) : 1));
   const tot = eff.reduce((s,x)=>s+x, 0);
   let r = Math.random()*tot;
   for(let i=0;i<pool.length;i++){ r -= eff[i]; if(r<=0) return pool[i]; }
@@ -1445,9 +1715,14 @@ function startTimer(){
   round.rafId = requestAnimationFrame(tick);
 }
 
+/* "Can't tell": pick two answers. Full credit when the text really cannot
+   decide between them, half credit (no streak) when one is right but the
+   text did decide. */
+let hedge = null;
 function renderOptions(options, revealed){
   const box = $("#options");
   box.innerHTML = "";
+  if(!revealed) hedge = null;
   box.classList.toggle("pair", options.length === 2);
   options.forEach((id,i)=>{
     const b = document.createElement("button");
@@ -1458,9 +1733,56 @@ function renderOptions(options, revealed){
       if(revealed.accepted.has(id)) b.classList.add("is-right");
       else if(id === revealed.picked) b.classList.add("is-wrong");
       else b.classList.add("dim");
-    } else b.onclick = () => answer(id);
+    } else b.onclick = () => hedge ? hedgePick(id, b) : answer(id);
     box.appendChild(b);
   });
+  if(!revealed && options.length > 2){
+    const h = document.createElement("button");
+    h.className = "opt hedge"; h.id = "hedgebtn";
+    h.innerHTML = `<kbd>0</kbd><span>Can't tell — pick two</span>`;
+    h.onclick = toggleHedge;
+    box.appendChild(h);
+  }
+}
+
+function toggleHedge(){
+  if(!round || round.answered) return;
+  hedge = hedge ? null : [];
+  document.querySelectorAll("#options .opt").forEach(b => b.classList.remove("hedged"));
+  const h = $("#hedgebtn"); if(h) h.classList.toggle("on", !!hedge);
+  $("#fb-head").textContent = hedge ? "Pick the two it could be." : "Pick the language.";
+}
+function hedgePick(id, btn){
+  if(!round || round.answered || !hedge || hedge.includes(id)) return;
+  hedge.push(id); if(btn) btn.classList.add("hedged");
+  if(hedge.length === 2) answerHedge(hedge[0], hedge[1]);
+}
+function answerHedge(a, b){
+  if(!round || round.answered) return;
+  round.answered = true;
+  if(round.rafId) cancelAnimationFrame(round.rafId);
+  $("#timerbar").style.width = "0%";
+  const t = round.target, acc = round.accepted;
+  const both = acc.has(a) && acc.has(b), one = acc.has(a) || acc.has(b);
+  S.seen++;
+  if(both){ S.right++; S.streak++; S.best = Math.max(S.best, S.streak); } else S.streak = 0;
+  S.cm[t.id] = S.cm[t.id] || {};
+  const key = both ? t.id : one ? "__hedge" : (acc.has(a) ? b : a);
+  S.cm[t.id][key] = (S.cm[t.id][key]||0) + 1;
+  S.ts[t.id] = Date.now();
+  setW(t.id, w(t.id) * (both ? 0.97 : one ? 1.15 : 1.6));
+  save();
+  revealCard(t, acc);
+  const wrong = [a, b].find(x => !acc.has(x)) || null;
+  renderOptions(round.options, {accepted: acc, picked: wrong});
+  const names = [a, b].map(x => BY_ID[x].name).join(" or ");
+  const msg = both ? `Honest call: nothing on screen separates ${names}. `
+    : one ? `Half right: it was ${t.name}, and the text did decide it. `
+    : `Neither: it was ${t.name}. `;
+  $("#fb-head").innerHTML = `<span class="hedgemsg ${both ? "ok" : one ? "half" : "bad"}">${esc(msg)}</span>` + $("#fb-head").innerHTML;
+  paintRail();
+  if(S.adv === "manual") $("#btn-next").classList.add("on");
+  else round.timerId = setTimeout(newRound, both ? 1500 : 3500);
 }
 
 function revealCard(t, accepted){
@@ -1573,8 +1895,11 @@ document.addEventListener("keydown", e=>{
     return;
   }
   const n = parseInt(e.key,10);
-  if(n>=1 && n<=8 && round && !round.answered && round.kind === "qcm" && round.options[n-1])
-    answer(round.options[n-1]);
+  if(n===0 && round && !round.answered && round.kind === "qcm"){ toggleHedge(); return; }
+  if(n>=1 && n<=8 && round && !round.answered && round.kind === "qcm" && round.options[n-1]){
+    const id = round.options[n-1];
+    if(hedge) hedgePick(id, document.querySelectorAll("#options .opt")[n-1]); else answer(id);
+  }
 });
 
 /* ============================================================
@@ -1612,6 +1937,7 @@ function paintSettings(){
   set("#adv-chips .chip",     c => c.dataset.adv === S.adv);
   set("#map-chips .chip",     c => c.dataset.maplevel === S.maplevel);
   set("#gg-chips .chip",      c => (c.dataset.ggonly === "1") === !!S.ggonly);
+  set("#freq-chips .chip",    c => (c.dataset.freq === "1") === (S.freq !== false));
   const off = Object.keys(NO_COVERAGE).map(id => BY_ID[id].name);
   $("#buildstamp").textContent = BUILD;
   $("#maplevelnow").textContent = placeSet().length
@@ -1631,6 +1957,7 @@ bind("#pool-chips .chip","pool");
 document.querySelectorAll("#time-chips .chip").forEach(c=>c.onclick=()=>{ S.limit=+c.dataset.time; save(); paintSettings(); newRound(); });
 document.querySelectorAll("#face-chips .chip").forEach(c=>c.onclick=()=>{ S.face=c.dataset.face; save(); paintSettings(); });
 document.querySelectorAll("#gg-chips .chip").forEach(c=>c.onclick=()=>{ S.ggonly = c.dataset.ggonly === "1"; save(); paintSettings(); newRound(); });
+document.querySelectorAll("#freq-chips .chip").forEach(c=>c.onclick=()=>{ S.freq = c.dataset.freq === "1"; save(); paintSettings(); newRound(); });
 document.querySelectorAll("#map-chips .chip").forEach(c=>c.onclick=()=>{ S.maplevel=c.dataset.maplevel; save(); paintSettings(); newRound(); });
 document.querySelectorAll("#adv-chips .chip").forEach(c=>c.onclick=()=>{ S.adv=c.dataset.adv; save(); paintSettings(); });
 document.querySelectorAll("#signage-chips .chip").forEach(c=>c.onclick=()=>{ S.signage=c.dataset.signage; save(); paintSettings(); newRound(); });
@@ -1728,7 +2055,7 @@ function paintStats(){
    ============================================================ */
 
 /* essential: the name genuinely does not locate it */
-const PLACE_INDIC = ["hi","bn","pa","gu","ta","te","kn","ml","si"];
+const PLACE_INDIC = ["hi","mr","ne","bn","as","or","pa","gu","ta","te","kn","ml","si"];
 const PLACE_CORE = PLACE_INDIC.concat(["es","pt","fr","ca","ar","zht"]);
 /* wider: countries that are small, easily swapped, or unfamiliar */
 const PLACE_MORE = PLACE_CORE.concat(
@@ -1737,7 +2064,7 @@ const PLACE_MORE = PLACE_CORE.concat(
 /* How close counts, in km. Roughly the radius of the target area, so
    Kerala is tight and Russia is not. */
 const TOL = {
-  hi:400, bn:250, pa:180, gu:220, ta:260, te:260, kn:220, ml:180, si:160,
+  hi:400, bn:250, pa:180, gu:220, ta:260, te:260, kn:220, ml:180, si:160, mr:300, ne:250, as:220, or:220, be:250, ky:300, srl:220,
   zhs:900, zht:150, ko:220, ja:450,
   ru:1400, kk:700, mn:600, uk:450, bg:200, sr:200, mk:120, el:300,
   ka:150, hy:120, am:450, ar:800, fa:600, he:110, tr:600, az:200,
@@ -1787,7 +2114,8 @@ mn:["c_mn"], kk:["c_kz"], el:["c_gr","c_cy"], ka:["c_ge"], hy:["c_am"],
 ar:["c_sa","c_eg","c_jo","c_ae","c_ma","c_tn"], fa:["c_ir","c_af"], he:["c_il"], am:["c_et","c_er"],
 th:["c_th"], lo:["c_la"], km:["c_kh"], my:["c_mm"],
 hi:["s_uttarpradesh","s_bihar","s_madhyapradesh","s_rajasthan","s_delhi","s_haryana",
-    "s_uttarakhand","s_jharkhand","s_chhattisgarh","s_maharashtra","c_np"],
+    "s_uttarakhand","s_jharkhand","s_chhattisgarh"],
+mr:["s_maharashtra"], ne:["c_np"], as:["s_assam"], or:["s_odisha"], be:["c_by"], ky:["c_kg"], srl:["c_rs","c_ba","c_me"],
 bn:["s_westbengal","c_bd"], pa:["s_punjab"], gu:["s_gujarat"], ta:["s_tamilnadu"],
 te:["s_andhrapradesh","s_telangana"], kn:["s_karnataka"], ml:["s_kerala"], si:["c_lk"],
 zhs:["c_cn"], zht:["c_tw"], ja:["c_jp"], ko:["c_kr"],
@@ -2094,7 +2422,7 @@ function medianDist(id){
    Being quizzed cold on a map you have never studied is the slowest
    way to learn one. This is the place to just look.
    ============================================================ */
-let browseCat = "indic";
+let browseCat = "indicn";
 function paintBrowse(){
   document.querySelectorAll("#browse-chips .chip")
     .forEach(c => c.setAttribute("aria-pressed", c.dataset.bcat === browseCat));
