@@ -67,7 +67,7 @@ body{
   font-size:clamp(2.4rem,9.5vw,4.4rem);line-height:1.3;word-break:break-word;
 }
 #specimen.len-phrase{font-size:clamp(1.5rem,6vw,3rem)}
-#specimen.len-sign{font-size:clamp(1.05rem,4.2vw,2.1rem);line-height:1.45}
+#specimen.len-sign{font-size:clamp(1.3rem,5.6vw,2.1rem);line-height:1.45}
 #specimen.caps{text-transform:uppercase}
 #specimen mark{background:none;color:inherit;position:relative}
 #plate.revealed #specimen mark{border-radius:3px}
@@ -248,6 +248,38 @@ table.mx td.zero{color:#3D4750}
 #browse-legend .row{font-size:13px;padding:4px 0;border-bottom:1px solid var(--ink-2)}
 #browse-legend .row b{font-weight:600}
 #browse-legend .row span{color:var(--muted)}
+#mapsvg .city,#browsesvg .city{fill:#F0E2C4;stroke:#16242F;stroke-width:.6;vector-effect:non-scaling-stroke;pointer-events:none}
+#mapsvg .clbl,#browsesvg .clbl{fill:#C9D3DA;font-family:'IBM Plex Sans',sans-serif;paint-order:stroke;
+  stroke:#16242F;stroke-width:2.5px;vector-effect:non-scaling-stroke;pointer-events:none}
+#browsesvg .zn.dim{fill:rgba(224,166,60,.12);stroke:rgba(224,166,60,.35)}
+#browsesvg .zn.on{fill:rgba(224,166,60,.75);stroke-width:2.4}
+#browse-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0 4px}
+#browse-tools .hint{font-size:12px;color:var(--muted)}
+#browse-contrast{margin:12px 0;background:var(--ink-2);border:1px solid var(--ink-3);border-radius:var(--r);padding:10px 13px}
+#browse-contrast h4{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--amber);margin:6px 0 6px}
+#browse-contrast p{font-size:13px;color:var(--muted);margin:0 0 6px;line-height:1.5;max-width:80ch}
+#browse-contrast p b{color:var(--text);font-weight:600}
+#browse-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px;margin-top:6px}
+.bcard{background:var(--ink-2);border:1px solid var(--ink-3);border-radius:var(--r);padding:10px 12px;cursor:pointer}
+.bcard.on{border-color:var(--amber)}
+.bcard h3{font-size:15px;margin:0;font-weight:600}
+.bcard h3 .pl{font-weight:400;color:var(--muted);font-size:12px;margin-left:6px}
+.bcard .tl{font-size:12.5px;color:var(--muted);margin:5px 0 7px;line-height:1.45}
+.bcard .sib{font-size:12px;color:var(--amber);margin:-2px 0 6px}
+.bcard .smp{background:#FAFBFB;color:#12171C;border-radius:4px;padding:6px 9px;font-size:20px;line-height:1.5;
+  display:flex;flex-direction:column;gap:2px;overflow-wrap:break-word}
+.bcard .smp mark{background:none;color:inherit;border-radius:3px}
+.bcard .smp mark.dec{background:rgba(224,166,60,.55);box-shadow:0 2px 0 var(--amber)}
+.bcard .smp mark.sha{background:rgba(224,166,60,.18)}
+.bcard .glyphrow .glyph{font-size:16px;padding:0 6px}
+/* several signs on one plate: each gets its own frame, the plate none */
+#plate.multi #inner{border:none!important;padding:0!important}
+.signstack{display:flex;flex-wrap:wrap;gap:12px 16px;justify-content:center;align-items:center}
+.signstack .sgn{border:2px solid currentColor;border-radius:6px;padding:.35em .7em;max-width:100%;min-width:0}
+#plate.sign-white .signstack .sgn{border-color:#9AA6AF}
+#specimen.len-sign.multi{font-size:clamp(1.15rem,4.8vw,1.75rem)}
+.signgrid{grid-template-columns:minmax(0,1fr) auto}
+.signgrid span,.signexit span,.signstreet span{min-width:0;overflow-wrap:break-word}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 .tgm-nav{display:inline-flex;gap:4px;align-items:center;margin-right:6px;flex:none}.tgm-nav>a{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:7px;border:1px solid currentColor;opacity:.5;color:inherit;text-decoration:none;font-size:14px;line-height:1}.tgm-nav>a:hover,.tgm-nav>a:focus-visible{opacity:1}
 .tgm-maps{position:relative;display:inline-block}.tgm-maps>summary{list-style:none;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:7px;border:1px solid currentColor;opacity:.5;cursor:pointer;font-size:14px;line-height:1}.tgm-maps>summary::-webkit-details-marker{display:none}.tgm-maps[open]>summary,.tgm-maps>summary:hover{opacity:1}.tgm-pop{position:absolute;top:34px;left:0;z-index:9999;width:min(360px,calc(100vw - 24px));background:#1b2229;color:#e8edf2;border:1px solid #3a4652;border-radius:10px;padding:10px 12px;box-shadow:0 8px 24px #0006;font:13px/1.35 system-ui,sans-serif;text-align:left}.tgm-pop b{display:block;font-size:13px;margin-bottom:6px}.tgm-pop a{display:inline;width:auto;height:auto;border:0;opacity:1;color:#e8edf2;text-decoration:none}.tgm-pop a:hover{color:#f2c94c}.tgm-pop li{display:flex;gap:8px;align-items:baseline;margin:4px 0}.tgm-pop ul{list-style:none;margin:0;padding:0}.tgm-pop .lv{flex:none;width:16px;text-align:center;font-size:11px;border:1px solid #4b5866;border-radius:3px;color:#9fb0bf}.tgm-pop .ml{margin-left:auto;flex:none;color:#9fb0bf;font-size:12px}
@@ -348,6 +380,10 @@ table.mx td.zero{color:#3D4750}
         <button class="chip" data-maplevel="more">Also small countries</button>
         <button class="chip" data-maplevel="all">Every language</button>
       </div>
+      <div class="chips" id="mapall-chips" style="margin-top:7px">
+        <button class="chip" data-mapall="1">Groups: every zone is clickable</button>
+        <button class="chip" data-mapall="0">Groups: six nearby zones</button>
+      </div>
       <p style="margin-top:7px">A map round replaces the multiple choice: you place the pin instead of naming the language. Scroll or pinch to zoom.</p>
     </fieldset>
 
@@ -389,9 +425,13 @@ table.mx td.zero{color:#3D4750}
   <div class="ov-head"><h2>Study the map</h2><div class="spacer"></div>
     <button class="railbtn" data-close>Close</button></div>
   <div class="ov-body">
-    <p>No quiz. Pick a group and look at where its languages are actually written.</p>
+    <p>No quiz. Pick a group: where each language is written, how to tell it from its neighbours, and what it looks like.</p>
     <div class="chips" id="browse-chips" style="margin-bottom:12px"></div>
     <svg id="browsesvg" preserveAspectRatio="xMidYMid meet"></svg>
+    <div id="browse-tools"><button class="chip" id="btn-drillcat">Practise this group</button>
+      <span class="hint">Tap a card to light up its area on the map.</span></div>
+    <div id="browse-contrast"></div>
+    <div id="browse-cards"></div>
     <div id="browse-legend"></div>
   </div>
 </div>
@@ -1217,7 +1257,7 @@ const lookPeers = id => DATA.filter(d => LOOK_OF[d.id] === LOOK_OF[id] && d.id !
    ============================================================ */
 /* Shown in Settings so a stale cached or undeployed copy is identifiable at a
    glance instead of being debugged as a logic fault. */
-const BUILD = "2026-10-30 · b9 clusters";
+const BUILD = "2026-10-30 · b10 multi-sign, cities, study";
 const KEY = "signreader.v2";
 /* A saved setting always beats a new default, so changing DEFAULT_STATE alone
    never reaches anyone who has already played. Migrations run once and are
@@ -1227,7 +1267,7 @@ const KEY = "signreader.v2";
 const MIGRATION = 2;
 const DEFAULT_STATE = { weights:{}, cm:{}, ts:{}, dist:{}, seen:0, right:0, streak:0, best:0,
                         pool:"all", cats:[], limit:5000, face:"alt", len:"phrase",
-                        signage:"on", adv:"auto", ggonly:true, maplevel:"indic", mode:"octo", pair:null, mig:0 };
+                        signage:"on", adv:"auto", ggonly:true, maplevel:"indic", mapAll:true, mode:"octo", pair:null, mig:0 };
 let S = load();
 decay();
 
@@ -1489,6 +1529,33 @@ function composeSpecimen(d){
     return {kind:"line", parts: tellFirst(d, d.p, 2), sep:"  ·  "};
   }
 
+  return composeSigns(d);
+}
+
+/* One sign rarely carries the letter that decides it. Add a second or a
+   third panel until one does — as you would by panning — and sometimes add
+   one anyway, so "two signs" never means "look harder". */
+function composeSigns(d){
+  const signs = [composeOneSign(d)];
+  const txt = sp => sp.parts.concat(sp.road || []);
+  const decisive = sp => txt(sp).some(p => hasDecisive(d, p));
+  let want = Math.random() < 0.3 ? 2 : 1;
+  const chase = d.dec.length && !isDefaultLang(d) && Math.random() < 0.7;
+  if(chase && !decisive(signs[0])) want = 3;
+  let guard = 0;
+  while(signs.length < want && guard++ < 12){
+    const n = composeOneSign(d);
+    const seen = signs.flatMap(txt);
+    if(n.parts.some(p => seen.includes(p)) && guard < 8) continue;
+    signs.push(n);
+    if(chase && decisive(n)) break;
+  }
+  if(signs.length === 1) return signs[0];
+  return {kind:"multi", signs, parts: signs.flatMap(x => x.parts),
+          road: signs.map(x => x.road).filter(Boolean)};
+}
+
+function composeOneSign(d){
   /* Real signage is not all destination boards. Five layouts, so the same
      language does not always arrive in the same shape. */
   const useLocal = d.dg && Math.random() < 0.5;
@@ -1521,36 +1588,61 @@ function composeSpecimen(d){
           km: rows.map(() => dig(1 + ((Math.random()*90)|0))), road: d.r};
 }
 
-function renderSpecimen(spec, d){
-  const el = $("#specimen");
-  if(spec.kind === "line"){
-    el.innerHTML = spec.parts.map(p => highlight(p, d)).join(esc(spec.sep || " "));
-  } else if(spec.layout === "entry"){
-    el.innerHTML = `<div class="signentry">${highlight(spec.parts[0], d)}</div>`;
-  } else if(spec.layout === "street"){
-    el.innerHTML = `<div class="signstreet"><span class="sn">${highlight(spec.parts[0], d)}` +
+function signHTML(spec, d){
+  if(spec.layout === "entry")
+    return `<div class="signentry">${highlight(spec.parts[0], d)}</div>`;
+  if(spec.layout === "street")
+    return `<div class="signstreet"><span class="sn">${highlight(spec.parts[0], d)}` +
       ` ${highlight(spec.parts[1], d)}</span><span class="no">${esc(spec.num)}</span></div>`;
-  } else if(spec.layout === "exit"){
+  if(spec.layout === "exit"){
     let h = `<div class="signexit"><span class="ex">${highlight(spec.parts[0], d)}` +
       `<b>${esc(spec.num)}</b></span>`;
     if(spec.parts[1]) h += `<span class="dst">${highlight(spec.parts[1], d)}</span>`;
     if(spec.road) h += `<span class="rd">${highlight(spec.road, d)}</span>`;
-    el.innerHTML = h + "</div>";
-  } else if(spec.layout === "arrow"){
+    return h + "</div>";
+  }
+  if(spec.layout === "arrow"){
     let h = '<div class="signgrid arrows">';
     spec.parts.forEach((p,i) => {
       h += `<span>${highlight(p, d)}</span><span class="ar">${spec.arrows[i]}</span>`;
     });
-    el.innerHTML = h + "</div>";
-  } else {
-    let h = '<div class="signgrid">';
-    spec.parts.forEach((p,i) => {
-      h += `<span>${highlight(p, d)}</span><span class="km">${esc(spec.km[i])}</span>`;
-    });
-    if(spec.road) h += `<span class="rd">${highlight(spec.road, d)}</span>`;
-    el.innerHTML = h + "</div>";
+    return h + "</div>";
   }
-  el.className = "len-" + S.len;
+  let h = '<div class="signgrid">';
+  spec.parts.forEach((p,i) => {
+    h += `<span>${highlight(p, d)}</span><span class="km">${esc(spec.km[i])}</span>`;
+  });
+  if(spec.road) h += `<span class="rd">${highlight(spec.road, d)}</span>`;
+  return h + "</div>";
+}
+
+/* Shrink the text until the plate holds it: long Bengali or Tamil names
+   used to run straight off the sign. */
+function fitSpecimen(){
+  const el = $("#specimen"), inner = $("#inner"), plate = $("#plate");
+  if(!el || !inner || !plate) return;
+  el.style.fontSize = "";
+  let f = parseFloat(getComputedStyle(el).fontSize), n = 0;
+  const over = () => inner.scrollHeight > plate.clientHeight - 20 ||
+    inner.scrollWidth > inner.clientWidth + 1 ||
+    [...el.querySelectorAll(".sgn,.signgrid,.signexit,.signstreet,.signentry")]
+      .some(x => x.scrollWidth > x.clientWidth + 1);
+  while(n++ < 16 && f > 10 && over()){ f *= 0.9; el.style.fontSize = f + "px"; }
+}
+window.addEventListener("resize", () => fitSpecimen());
+
+function renderSpecimen(spec, d){
+  const el = $("#specimen");
+  if(spec.kind === "line"){
+    el.innerHTML = spec.parts.map(p => highlight(p, d)).join(esc(spec.sep || " "));
+  } else if(spec.kind === "multi"){
+    el.innerHTML = '<div class="signstack">' +
+      spec.signs.map(x => `<div class="sgn">${signHTML(x, d)}</div>`).join("") + "</div>";
+  } else el.innerHTML = signHTML(spec, d);
+  $("#plate").classList.toggle("multi", spec.kind === "multi");
+  el.className = "len-" + S.len + (spec.kind === "multi" ? " multi" : "");
+  requestAnimationFrame(fitSpecimen);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitSpecimen);
   /* Uppercase destroys ß, ı and İ, so those languages stay lowercase. */
   const capsSafe = !["de","tr","az"].includes(d.id);
   if(capsSafe && S.len !== "sign" && Math.random() < 0.22) el.classList.add("caps");
@@ -1936,6 +2028,7 @@ function paintSettings(){
   set("#signage-chips .chip", c => c.dataset.signage === S.signage);
   set("#adv-chips .chip",     c => c.dataset.adv === S.adv);
   set("#map-chips .chip",     c => c.dataset.maplevel === S.maplevel);
+  set("#mapall-chips .chip",  c => (c.dataset.mapall === "1") === (S.mapAll !== false));
   set("#gg-chips .chip",      c => (c.dataset.ggonly === "1") === !!S.ggonly);
   set("#freq-chips .chip",    c => (c.dataset.freq === "1") === (S.freq !== false));
   const off = Object.keys(NO_COVERAGE).map(id => BY_ID[id].name);
@@ -2146,6 +2239,7 @@ function regionPath(key){
 function regionBBox(keys){
   let x0 = 180, x1 = -180, y0 = 90, y1 = -90;
   keys.forEach(k => (REGIONS[k] ? REGIONS[k].r : []).forEach(ring => ring.forEach(([lo, la]) => {
+    if(k === "c_ru" && lo < 0) return;
     if(lo < x0) x0 = lo; if(lo > x1) x1 = lo;
     if(la < y0) y0 = la; if(la > y1) y1 = la;
   })));
@@ -2157,9 +2251,143 @@ function regionBBox(keys){
    Drawn from the zones of confusable languages, so the choice on the
    map mirrors the choice the multiple choice would have offered.
    ============================================================ */
+/* Major cities, drawn on map rounds and the study map so a region is
+   remembered by what is in it, not only by its outline. Rank 1 shows at any
+   zoom, rank 2 once zoomed in. [name, lat, lon, rank] */
+const MAP_CITIES = [
+["Delhi",28.61,77.21,1],["Lucknow",26.85,80.95,1],["Varanasi",25.32,82.99,1],["Kanpur",26.45,80.33,2],["Agra",27.18,78.01,2],["Prayagraj",25.44,81.85,2],["Gorakhpur",26.76,83.37,2],
+["Patna",25.59,85.14,1],["Gaya",24.79,85.0,2],["Muzaffarpur",26.12,85.39,2],
+["Bhopal",23.26,77.41,1],["Indore",22.72,75.86,1],["Jabalpur",23.18,79.99,2],["Gwalior",26.22,78.18,2],
+["Jaipur",26.91,75.79,1],["Jodhpur",26.24,73.02,2],["Udaipur",24.59,73.71,2],["Bikaner",28.02,73.31,2],["Kota",25.18,75.83,2],
+["Chandigarh",30.73,76.78,1],["Gurugram",28.46,77.03,2],["Hisar",29.15,75.72,2],
+["Dehradun",30.32,78.03,1],["Haridwar",29.95,78.16,2],["Shimla",31.10,77.17,2],["Srinagar",34.08,74.80,2],
+["Ranchi",23.34,85.31,1],["Jamshedpur",22.80,86.20,2],["Dhanbad",23.80,86.43,2],
+["Raipur",21.25,81.63,1],["Bilaspur",22.08,82.15,2],
+["Mumbai",19.08,72.88,1],["Pune",18.52,73.86,1],["Nagpur",21.15,79.09,1],["Nashik",20.00,73.79,2],["Aurangabad",19.88,75.34,2],["Kolhapur",16.70,74.24,2],["Panaji",15.49,73.83,2],
+["Kathmandu",27.72,85.32,1],["Pokhara",28.21,83.99,2],["Biratnagar",26.45,87.27,2],["Nepalgunj",28.05,81.62,2],
+["Guwahati",26.14,91.74,1],["Dibrugarh",27.47,94.91,2],["Silchar",24.83,92.78,2],["Shillong",25.58,91.89,2],["Imphal",24.82,93.94,2],["Agartala",23.83,91.29,2],["Gangtok",27.33,88.61,2],
+["Bhubaneswar",20.30,85.82,1],["Cuttack",20.46,85.88,2],["Puri",19.81,85.83,2],["Sambalpur",21.47,83.97,2],["Rourkela",22.26,84.85,2],
+["Kolkata",22.57,88.36,1],["Siliguri",26.73,88.40,2],["Durgapur",23.52,87.31,2],["Darjeeling",27.04,88.27,2],
+["Dhaka",23.81,90.41,1],["Chittagong",22.36,91.78,1],["Khulna",22.85,89.54,2],["Rajshahi",24.37,88.60,2],["Sylhet",24.89,91.87,2],
+["Amritsar",31.63,74.87,1],["Ludhiana",30.90,75.85,2],["Jalandhar",31.33,75.58,2],["Patiala",30.34,76.39,2],
+["Ahmedabad",23.02,72.57,1],["Surat",21.17,72.83,2],["Vadodara",22.31,73.18,2],["Rajkot",22.30,70.80,2],["Bhuj",23.25,69.67,2],
+["Chennai",13.08,80.27,1],["Madurai",9.93,78.12,1],["Coimbatore",11.02,76.96,2],["Tiruchirappalli",10.79,78.70,2],["Salem",11.66,78.15,2],
+["Visakhapatnam",17.69,83.22,1],["Vijayawada",16.51,80.65,2],["Tirupati",13.63,79.42,2],["Kurnool",15.83,78.04,2],
+["Hyderabad",17.39,78.49,1],["Warangal",17.97,79.59,2],
+["Bengaluru",12.97,77.59,1],["Mysuru",12.30,76.64,2],["Mangaluru",12.91,74.86,2],["Hubballi",15.36,75.12,2],["Belagavi",15.85,74.50,2],
+["Thiruvananthapuram",8.52,76.94,1],["Kochi",9.93,76.27,1],["Kozhikode",11.26,75.78,2],
+["Colombo",6.93,79.86,1],["Jaffna",9.66,80.02,1],["Kandy",7.29,80.63,2],["Galle",6.03,80.22,2],["Trincomalee",8.59,81.21,2],["Anuradhapura",8.31,80.40,2],["Batticaloa",7.72,81.70,2],
+["Lahore",31.55,74.34,1],["Karachi",24.86,67.01,1],["Islamabad",33.69,73.05,2],
+["Moscow",55.76,37.62,1],["St Petersburg",59.94,30.31,1],["Yekaterinburg",56.84,60.61,1],["Novosibirsk",55.03,82.92,1],["Vladivostok",43.12,131.89,1],["Kazan",55.79,49.12,2],["Krasnoyarsk",56.01,92.85,2],["Irkutsk",52.29,104.30,2],["Khabarovsk",48.48,135.08,2],["Rostov-on-Don",47.24,39.71,2],["Volgograd",48.71,44.51,2],["Samara",53.20,50.15,2],["Murmansk",68.97,33.07,2],["Omsk",54.99,73.37,2],["Yakutsk",62.03,129.73,2],["Kaliningrad",54.71,20.51,2],["Sochi",43.60,39.73,2],["Arkhangelsk",64.54,40.54,2],["Ulan-Ude",51.83,107.58,2],
+["Minsk",53.90,27.57,1],["Brest",52.10,23.69,2],["Gomel",52.44,30.98,2],["Vitebsk",55.19,30.20,2],["Grodno",53.68,23.83,2],
+["Kyiv",50.45,30.52,1],["Lviv",49.84,24.03,1],["Kharkiv",49.99,36.23,1],["Odesa",46.48,30.72,1],["Dnipro",48.46,35.05,2],["Zaporizhzhia",47.84,35.14,2],["Vinnytsia",49.23,28.47,2],["Chernivtsi",48.29,25.94,2],["Uzhhorod",48.62,22.29,2],
+["Sofia",42.70,23.32,1],["Plovdiv",42.14,24.75,2],["Varna",43.21,27.91,2],["Burgas",42.50,27.47,2],["Veliko Tarnovo",43.08,25.63,2],["Ruse",43.85,25.95,2],
+["Belgrade",44.79,20.45,1],["Novi Sad",45.27,19.83,2],["Niš",43.32,21.90,2],["Kragujevac",44.01,20.91,2],
+["Sarajevo",43.86,18.41,1],["Banja Luka",44.77,17.19,2],["Mostar",43.34,17.81,2],["Tuzla",44.54,18.67,2],
+["Podgorica",42.44,19.26,1],["Kotor",42.42,18.77,2],
+["Skopje",41.99,21.43,1],["Bitola",41.03,21.33,2],["Ohrid",41.12,20.80,2],
+["Ulaanbaatar",47.92,106.92,1],["Erdenet",49.03,104.08,2],["Darkhan",49.47,105.97,2],["Khovd",48.01,91.64,2],
+["Astana",51.17,71.45,1],["Almaty",43.24,76.89,1],["Shymkent",42.34,69.59,2],["Karaganda",49.80,73.10,2],["Aktobe",50.28,57.17,2],["Oskemen",49.95,82.61,2],["Pavlodar",52.29,76.97,2],
+["Bishkek",42.87,74.60,1],["Osh",40.53,72.80,2],["Karakol",42.49,78.39,2],
+["Warsaw",52.23,21.01,1],["Kraków",50.06,19.94,1],["Gdańsk",54.35,18.65,1],["Wrocław",51.11,17.04,2],["Poznań",52.41,16.93,2],["Łódź",51.76,19.46,2],["Szczecin",53.43,14.55,2],["Lublin",51.25,22.57,2],["Białystok",53.13,23.16,2],["Rzeszów",50.04,22.00,2],
+["Prague",50.08,14.44,1],["Brno",49.20,16.61,2],["Ostrava",49.82,18.26,2],["Plzeň",49.74,13.38,2],
+["Bratislava",48.15,17.11,1],["Košice",48.72,21.26,2],["Žilina",49.22,18.74,2],["Banská Bystrica",48.74,19.15,2],
+["Zagreb",45.81,15.98,1],["Split",43.51,16.44,1],["Rijeka",45.33,14.44,2],["Osijek",45.55,18.69,2],["Dubrovnik",42.65,18.09,2],["Zadar",44.12,15.23,2],
+["Ljubljana",46.06,14.51,1],["Maribor",46.55,15.65,2],["Koper",45.55,13.73,2],
+["Tirana",41.33,19.82,1],["Shkodër",42.07,19.51,2],["Vlorë",40.47,19.49,2],["Pristina",42.66,21.17,1],["Prizren",42.21,20.74,2],
+["Riga",56.95,24.11,1],["Daugavpils",55.87,26.54,2],["Liepāja",56.51,21.01,2],["Vilnius",54.69,25.28,1],["Kaunas",54.90,23.90,2],["Klaipėda",55.71,21.13,2],["Tallinn",59.44,24.75,1],["Tartu",58.38,26.72,2],["Pärnu",58.39,24.50,2],
+["Helsinki",60.17,24.94,1],["Tampere",61.50,23.76,2],["Turku",60.45,22.27,2],["Oulu",65.01,25.47,2],["Rovaniemi",66.50,25.73,2],
+["Stockholm",59.33,18.07,1],["Gothenburg",57.71,11.97,1],["Malmö",55.60,13.00,2],["Umeå",63.83,20.26,2],["Kiruna",67.86,20.23,2],
+["Oslo",59.91,10.75,1],["Bergen",60.39,5.32,1],["Trondheim",63.43,10.40,2],["Tromsø",69.65,18.96,2],["Stavanger",58.97,5.73,2],
+["Copenhagen",55.68,12.57,1],["Aarhus",56.16,10.20,2],["Odense",55.40,10.39,2],["Aalborg",57.05,9.92,2],
+["Reykjavík",64.15,-21.94,1],["Akureyri",65.68,-18.09,2],["Tórshavn",62.01,-6.77,2],
+["Berlin",52.52,13.40,1],["Hamburg",53.55,9.99,1],["Munich",48.14,11.58,1],["Cologne",50.94,6.96,2],["Frankfurt",50.11,8.68,2],["Stuttgart",48.78,9.18,2],["Leipzig",51.34,12.37,2],["Dresden",51.05,13.74,2],["Hannover",52.37,9.73,2],
+["Vienna",48.21,16.37,1],["Graz",47.07,15.44,2],["Innsbruck",47.27,11.40,2],["Salzburg",47.81,13.04,2],
+["Zürich",47.38,8.54,1],["Bern",46.95,7.45,2],["Geneva",46.20,6.14,2],
+["Amsterdam",52.37,4.90,1],["Rotterdam",51.92,4.48,2],["Groningen",53.22,6.57,2],["Eindhoven",51.44,5.47,2],
+["Brussels",50.85,4.35,1],["Antwerp",51.22,4.40,2],["Liège",50.63,5.57,2],["Luxembourg",49.61,6.13,2],
+["Madrid",40.42,-3.70,1],["Barcelona",41.39,2.17,1],["Seville",37.39,-5.98,1],["Valencia",39.47,-0.38,2],["Bilbao",43.26,-2.93,2],["Santiago de Compostela",42.88,-8.54,2],["Zaragoza",41.65,-0.89,2],["Málaga",36.72,-4.42,2],
+["Lisbon",38.72,-9.14,1],["Porto",41.15,-8.61,1],["Faro",37.02,-7.93,2],
+["Paris",48.86,2.35,1],["Lyon",45.76,4.84,1],["Marseille",43.30,5.37,1],["Toulouse",43.60,1.44,2],["Bordeaux",44.84,-0.58,2],["Lille",50.63,3.06,2],["Nantes",47.22,-1.55,2],["Strasbourg",48.57,7.75,2],
+["Rome",41.90,12.50,1],["Milan",45.46,9.19,1],["Naples",40.85,14.27,1],["Turin",45.07,7.69,2],["Florence",43.77,11.26,2],["Bologna",44.49,11.34,2],["Palermo",38.12,13.36,2],["Bari",41.12,16.87,2],["Venice",45.44,12.33,2],
+["Bucharest",44.43,26.10,1],["Cluj-Napoca",46.77,23.59,2],["Iași",47.16,27.59,2],["Timișoara",45.75,21.23,2],["Constanța",44.18,28.65,2],["Chișinău",47.01,28.86,1],
+["Budapest",47.50,19.04,1],["Debrecen",47.53,21.63,2],["Szeged",46.25,20.15,2],
+["Istanbul",41.01,28.98,1],["Ankara",39.93,32.86,1],["Izmir",38.42,27.14,2],["Antalya",36.90,30.70,2],["Trabzon",41.00,39.72,2],["Diyarbakır",37.91,40.24,2],
+["Baku",40.41,49.87,1],["Ganja",40.68,46.36,2],
+["Athens",37.98,23.73,1],["Thessaloniki",40.64,22.94,1],["Heraklion",35.34,25.13,2],["Patras",38.25,21.73,2],["Nicosia",35.19,33.38,1],["Limassol",34.68,33.04,2],
+["Tbilisi",41.72,44.79,1],["Batumi",41.64,41.64,2],["Kutaisi",42.27,42.70,2],["Yerevan",40.18,44.51,1],["Gyumri",40.79,43.85,2],
+["Riyadh",24.71,46.68,1],["Jeddah",21.49,39.19,2],["Cairo",30.04,31.24,1],["Alexandria",31.20,29.92,2],["Amman",31.95,35.93,1],["Dubai",25.20,55.27,1],["Abu Dhabi",24.45,54.38,2],
+["Casablanca",33.57,-7.59,1],["Marrakesh",31.63,-7.99,2],["Tunis",36.81,10.18,1],["Sfax",34.74,10.76,2],
+["Tehran",35.69,51.39,1],["Mashhad",36.30,59.61,2],["Isfahan",32.65,51.67,2],["Tabriz",38.08,46.29,2],["Shiraz",29.59,52.58,2],["Kabul",34.56,69.21,1],
+["Jerusalem",31.77,35.21,1],["Tel Aviv",32.09,34.78,2],["Haifa",32.79,34.99,2],["Eilat",29.56,34.95,2],
+["Addis Ababa",9.03,38.74,1],["Asmara",15.32,38.93,2],
+["Bangkok",13.76,100.50,1],["Chiang Mai",18.79,98.99,2],["Phuket",7.88,98.39,2],["Udon Thani",17.41,102.79,2],["Hat Yai",7.01,100.47,2],
+["Vientiane",17.97,102.63,1],["Luang Prabang",19.89,102.13,2],["Pakse",15.12,105.80,2],
+["Phnom Penh",11.56,104.92,1],["Siem Reap",13.36,103.86,2],["Battambang",13.10,103.20,2],
+["Yangon",16.84,96.17,1],["Mandalay",21.97,96.08,2],["Naypyidaw",19.76,96.08,2],
+["Hanoi",21.03,105.85,1],["Ho Chi Minh City",10.82,106.63,1],["Da Nang",16.05,108.20,2],
+["Beijing",39.90,116.41,1],["Shanghai",31.23,121.47,1],["Guangzhou",23.13,113.26,2],["Chengdu",30.57,104.07,2],
+["Taipei",25.03,121.57,1],["Kaohsiung",22.63,120.30,2],["Taichung",24.15,120.67,2],
+["Tokyo",35.68,139.69,1],["Osaka",34.69,135.50,1],["Sapporo",43.06,141.35,2],["Fukuoka",33.59,130.40,2],["Nagoya",35.18,136.91,2],["Sendai",38.27,140.87,2],
+["Seoul",37.57,126.98,1],["Busan",35.18,129.08,1],["Daegu",35.87,128.60,2],["Gwangju",35.16,126.85,2],
+["Mexico City",19.43,-99.13,1],["Guadalajara",20.67,-103.35,2],["Monterrey",25.69,-100.32,2],["Buenos Aires",-34.60,-58.38,1],["Córdoba",-31.42,-64.18,2],
+["Bogotá",4.71,-74.07,1],["Medellín",6.24,-75.58,2],["Lima",-12.05,-77.04,1],["Cusco",-13.53,-71.97,2],
+["São Paulo",-23.55,-46.63,1],["Rio de Janeiro",-22.91,-43.17,1],["Brasília",-15.79,-47.88,2],["Salvador",-12.97,-38.50,2],["Manaus",-3.12,-60.02,2],["Porto Alegre",-30.03,-51.23,2],
+["Luanda",-8.84,13.23,1],["Ouagadougou",12.37,-1.52,1],["Abidjan",5.36,-4.01,1]
+];
+
+/* Cities inside a viewBox, largest first, dropping any label that would
+   collide with one already placed. */
+/* Which regions each city falls in, computed once per set of regions. */
+const cityZoneCache = {};
+function citiesIn(keys){
+  const id = keys.slice().sort().join(",");
+  if(!cityZoneCache[id]) cityZoneCache[id] = MAP_CITIES.map(c => keys.filter(k => regionContains(k, c[1], c[2])));
+  return cityZoneCache[id];
+}
+/* o.keys: only cities inside those regions. o.all: regions whose cities all
+   show, whatever the zoom (the language being studied). */
+function cityLayer(vx, vy, vw, vh, opts){
+  const o = opts || {};
+  const fs = o.fs || vw / 62, r = o.r || vw / 340;
+  const minor = vw <= (o.minorAt || 48);
+  const zk = o.keys && o.keys.length ? citiesIn(o.keys) : null;
+  const full = o.all || [];
+  const inView = MAP_CITIES.filter(([, la, lo, rk], i) =>
+    (!zk || zk[i].length) &&
+    (rk === 1 || minor || (zk && zk[i].some(k => full.includes(k)))) &&
+    lo > vx && lo < vx + vw && -la > vy && -la < vy + vh);
+  inView.sort((a, b) => a[3] - b[3]);
+  const boxes = []; let s = "", n = 0;
+  for(const [name, la, lo] of inView){
+    if(n >= (o.max || 60)) break;
+    const tw = name.length * fs * 0.52, flip = lo + r * 2 + tw > vx + vw;
+    const x0 = flip ? lo - r * 2 - tw : lo + r * 2, y0 = -la - fs * 0.8, y1 = -la + fs * 0.3;
+    if(boxes.some(b => x0 < b[2] && x0 + tw > b[0] && y0 < b[3] && y1 > b[1])) continue;
+    boxes.push([x0 - r, y0, x0 + tw + r, y1]); n++;
+    s += `<circle class="city" cx="${lo}" cy="${-la}" r="${r.toFixed(3)}"/>` +
+      `<text class="clbl" x="${(flip ? lo - r * 2 : lo + r * 2).toFixed(2)}" y="${(-la + fs * 0.32).toFixed(2)}"` +
+      ` font-size="${fs.toFixed(2)}" text-anchor="${flip ? "end" : "start"}">${esc(name)}</text>`;
+  }
+  return s;
+}
+
 function buildCandidates(target, pool){
   const ids = new Set(pool.map(d => d.id));
   const mine = target.z.slice();
+  /* Inside a chosen group, every zone of every language in it is on the
+     board: the answer has to be found, not picked from six. A region that
+     sits inside one of the answers is left out, so no tap is ambiguous. */
+  if(S.cats && S.cats.length && S.mapAll !== false && S.mode !== "pair"){
+    const keys = new Set(mine);
+    pool.forEach(d => d.z.forEach(k => {
+      if(!REGIONS[k] || keys.has(k)) return;
+      const c = REGIONS[k].c;
+      if(mine.some(m => regionContains(m, c[0], c[1]))) return;
+      keys.add(k);
+    }));
+    if(keys.size > mine.length) return { all: shuffle([...keys]), answer: mine.slice() };
+  }
   const out = [];
   const push = key => {
     if(!REGIONS[key] || mine.includes(key) || out.includes(key)) return;
@@ -2273,8 +2501,11 @@ function drawMapLayer(){
     } else if(k === mapPick) cls = "cand sel";
     h += `<path class="${cls}" d="${regionPath(k)}"/>`;
   });
+  h += cityLayer(MV.x, MV.y, MV.w, MV.h, {fs: MV.w/58, r: MV.w/330, minorAt: 42, keys: shown});
   if(mapLocked){
+    const many = cands.length > 8;
     const items = shown
+      .filter(k => !many || round.target.z.includes(k) || k === mapPick)
       .filter(k => !(round.target.z.includes(k) && k !== round.target.z[0] && k !== mapPick))
       .map(k => ({x: REGIONS[k].c[1], y: -REGIONS[k].c[0], t: REGIONS[k].n}));
     placeLabels(items, +fs, MV.w).forEach(it =>
@@ -2401,7 +2632,7 @@ function answerMap(){
   msg.className = ok ? "good" : "bad";
   document.getElementById("btn-place").classList.remove("on");
 
-  const bb = regionBBox(round.cands.all.concat(t.z));
+  const bb = regionBBox((round.cands.all.length > 8 ? [mapPick] : round.cands.all).concat(t.z));
   frameOn([[bb.y0, bb.x0], [bb.y1, bb.x1]], 1.35);
   drawMapLayer();
   revealCard(t, null);
@@ -2422,48 +2653,104 @@ function medianDist(id){
    Being quizzed cold on a map you have never studied is the slowest
    way to learn one. This is the place to just look.
    ============================================================ */
-let browseCat = "indicn";
+let browseCat = "indicn", browseFocus = null;
+function browseLangs(cat){
+  return DATA.filter(d => cat.fams.includes(d.fam) && (!S.ggonly || !NO_COVERAGE[d.id]));
+}
 function paintBrowse(){
   document.querySelectorAll("#browse-chips .chip")
     .forEach(c => c.setAttribute("aria-pressed", c.dataset.bcat === browseCat));
   const cat = CAT_BY_K[browseCat];
-  const langs = DATA.filter(d => cat.fams.includes(d.fam) && d.z.length && (!S.ggonly || !NO_COVERAGE[d.id]));
+  const all = browseLangs(cat);
+  const langs = all.filter(d => d.z.length);
   const svg = document.getElementById("browsesvg");
-  if(!langs.length){ svg.innerHTML = ""; document.getElementById("browse-legend").innerHTML =
-    `<p>No mapped areas in this group yet.</p>`; return; }
+  if(browseFocus && !all.some(d => d.id === browseFocus)) browseFocus = null;
 
-  const keys = langs.flatMap(d => d.z);
-  const bb = regionBBox(keys);
-  const cx = (bb.x0+bb.x1)/2, cy = (bb.y0+bb.y1)/2;
-  let w = Math.max((bb.x1-bb.x0)*1.35, (bb.y1-bb.y0)*1.35*2, 14);
-  const vb = [cx-w/2, -(cy+w/4), w, w/2].map(n=>n.toFixed(2)).join(" ");
-  const fs = (w/40).toFixed(2);
+  if(!langs.length){ svg.style.display = "none"; svg.innerHTML = ""; }
+  else {
+    svg.style.display = "";
+    const keys = langs.flatMap(d => d.z);
+    const bb = regionBBox(keys);
+    const cx = (bb.x0+bb.x1)/2, cy = (bb.y0+bb.y1)/2;
+    const w = Math.max((bb.x1-bb.x0)*1.35, (bb.y1-bb.y0)*1.35*2, 14);
+    const vx = cx-w/2, vy = -(cy+w/4);
+    const fs = w/40;
+    const fz = browseFocus ? (BY_ID[browseFocus].z || []) : [];
+    let s = `<path class="land" d="${MAP_FILL}"/><path class="brd" d="${MAP_BORDERS}"/>`;
+    [...new Set(keys)].forEach(k => {
+      const cls = !browseFocus ? "zn" : fz.includes(k) ? "zn on" : "zn dim";
+      s += `<path class="${cls}" d="${regionPath(k)}"/>`;
+    });
+    s += cityLayer(vx, vy, w, w/2, {fs: w/68, r: w/360, minorAt: 30, max: 70, keys, all: fz});
+    /* one label per language, on its largest region */
+    const items = langs.filter(d => !browseFocus || d.id === browseFocus).map(d => {
+      const k = d.z.slice().sort((a,b)=>REGIONS[b].a-REGIONS[a].a)[0];
+      return {x: REGIONS[k].c[1], y: -REGIONS[k].c[0], t: d.name};
+    });
+    placeLabels(items, fs, w).forEach(it =>
+      s += `<text class="lbl" x="${it.x}" y="${it.y.toFixed(2)}" font-size="${fs.toFixed(2)}" text-anchor="middle">${esc(it.t)}</text>`);
+    svg.setAttribute("viewBox", [vx, vy, w, w/2].map(n=>n.toFixed(2)).join(" "));
+    svg.innerHTML = s;
+  }
 
-  let s = `<path class="land" d="${MAP_FILL}"/><path class="brd" d="${MAP_BORDERS}"/>`;
-  langs.forEach(d => d.z.forEach(k => { s += `<path class="zn" d="${regionPath(k)}"/>`; }));
-  /* one label per language, on its largest region */
-  const items = langs.map(d => {
-    const k = d.z.slice().sort((a,b)=>REGIONS[b].a-REGIONS[a].a)[0];
-    return {x: REGIONS[k].c[1], y: -REGIONS[k].c[0], t: d.name};
+  /* how to tell them apart: the cluster's own notes first */
+  const notes = [...new Set(cat.fams)].map(f => CONTRAST[f]).filter(Boolean);
+  $("#browse-contrast").innerHTML = notes.map(n =>
+    `<h4>${esc(n[0])}</h4>` + n.slice(1).map(p => `<p>${p}</p>`).join("")).join("");
+  $("#browse-contrast").style.display = notes.length ? "" : "none";
+
+  /* then one card per language: where, the rule, its letters, real text */
+  const glyphs = (arr, cls, d) => arr.map(x =>
+    `<span class="glyph${cls}" style="font-family:${d.font},sans-serif">${esc(x)}</span>`).join("");
+  $("#browse-cards").innerHTML = all.map(d => {
+    const sib = VARIANTS.find(v => v.includes(d.id));
+    const sibs = sib ? sib.filter(x => x !== d.id && BY_ID[x]).map(x => BY_ID[x].name) : [];
+    const pool = [...new Set((d.p || []).concat(d.w || []))];
+    const strong = pool.filter(x => hasDecisive(d, x));
+    const tellish = pool.filter(x => !strong.includes(x) && hasTell(d, x));
+    const plain = pool.filter(x => !strong.includes(x) && !tellish.includes(x));
+    const smp = [...strong.slice(0, 2), ...tellish.slice(0, 1), ...plain.slice(0, 1)].slice(0, 3);
+    let g = "";
+    if(d.dec.length) g += `<span class="lbl">proves it</span>` + glyphs(d.dec.slice(0, 8), "", d);
+    if(d.sha.length) g += `<span class="lbl" style="margin-left:6px">narrows</span>` + glyphs(d.sha.slice(0, 6), " weak", d);
+    if(d.no.length) g += `<span class="lbl" style="margin-left:6px">never</span>` +
+      d.no.slice(0, 6).map(x => `<span class="glyph neg">${esc(x)}</span>`).join("");
+    if(!d.dec.length && d.m.length) g += `<span class="lbl">no letter of its own — known by what is missing</span>`;
+    return `<div class="bcard${browseFocus === d.id ? " on" : ""}" data-id="${d.id}">` +
+      `<h3>${esc(d.name)}<span class="pl">${esc(d.place)}</span></h3>` +
+      (sibs.length ? `<div class="sib">Same script as ${esc(sibs.join(", "))} — only the marked letters split them.</div>` : "") +
+      `<div class="tl">${esc(d.tell)}</div>` +
+      (g ? `<div class="glyphrow">${g}</div>` : "") +
+      (smp.length ? `<div class="smp" style="font-family:${d.font},'Noto Sans',sans-serif">` +
+        smp.map(x => `<span>${highlight(x, d)}</span>`).join("") + "</div>" : "") +
+      (!d.z.length ? `<div class="tl" style="margin:6px 0 0">Not on the map yet.</div>` : "") +
+      "</div>";
+  }).join("");
+  document.querySelectorAll("#browse-cards .bcard").forEach(c => c.onclick = () => {
+    browseFocus = browseFocus === c.dataset.id ? null : c.dataset.id; paintBrowse();
   });
-  placeLabels(items, +fs, w).forEach(it =>
-    s += `<text class="lbl" x="${it.x}" y="${it.y.toFixed(2)}" font-size="${fs}" text-anchor="middle">${esc(it.t)}</text>`);
-  svg.setAttribute("viewBox", vb);
-  svg.innerHTML = s;
-
   document.getElementById("browse-legend").innerHTML = langs.map(d =>
     `<div class="row"><b>${esc(d.name)}</b> <span>— ${esc(d.z.map(k=>REGIONS[k].n).join(", "))}</span></div>`
   ).join("");
 }
 const bBox = document.getElementById("browse-chips");
 CATS.forEach(c => {
-  if(!DATA.some(d => c.fams.includes(d.fam) && d.z.length)) return;
+  if(!DATA.some(d => c.fams.includes(d.fam))) return;
   const b = document.createElement("button");
   b.className = "chip"; b.dataset.bcat = c.k; b.textContent = c.label;
-  b.onclick = () => { browseCat = c.k; paintBrowse(); };
+  b.onclick = () => { browseCat = c.k; browseFocus = null; paintBrowse(); };
   bBox.appendChild(b);
 });
-$("#btn-browse").onclick = () => { paintBrowse(); $("#ov-browse").classList.add("open"); };
+$("#btn-browse").onclick = () => {
+  if(S.cats && S.cats.length === 1 && CAT_BY_K[S.cats[0]]) browseCat = S.cats[0];
+  paintBrowse(); $("#ov-browse").classList.add("open");
+};
+$("#btn-drillcat").onclick = () => {
+  S.cats = [browseCat]; save(); paintSettings(); closeOverlays(); newRound();
+};
+document.querySelectorAll("#mapall-chips .chip").forEach(c => c.onclick = () => {
+  S.mapAll = c.dataset.mapall === "1"; save(); paintSettings(); newRound();
+});
 
 paintRail();
 newRound();
