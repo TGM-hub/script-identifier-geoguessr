@@ -20,6 +20,8 @@ Greek & Caucasus · Arabic, Urdu, Hebrew · North India & Bengal · South India 
   With one or more groups selected, every zone of those groups is clickable (Settings → Map rounds).
 - **Map** (study mode): every group, with its cheat sheet, one card per language (where, the rule, its letters, real sample text)
   and a map; tap a card to light up its area and its cities. **Practise this group** starts a drill on it.
+  One colour per language (the Indic ones match the Atlas India card). Direct links: `#in`, `#ru`, `#th`… open the
+  study page on that country's groups (used by the Atlas country pages), `#study:cyr` on a group.
 - After each answer: what proves it, what only narrows it, what it never has, and the cluster's cheat sheet.
 
 Progress is kept in the browser (`localStorage`, key `signreader.v2`).

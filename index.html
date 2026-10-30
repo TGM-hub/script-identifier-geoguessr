@@ -259,7 +259,22 @@ table.mx td.zero{color:#3D4750}
 #browse-contrast h4{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--amber);margin:6px 0 6px}
 #browse-contrast p{font-size:13px;color:var(--muted);margin:0 0 6px;line-height:1.5;max-width:80ch}
 #browse-contrast p b{color:var(--text);font-weight:600}
-#browse-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px;margin-top:6px}
+#browse-cards{columns:290px;column-gap:10px;margin-top:12px}
+#browse-cards .bcard{break-inside:avoid;margin-bottom:10px;display:block;border-left:4px solid var(--c,var(--amber))}
+#ov-browse .ov-body{max-width:1280px}
+.btop{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:900px){.btop{grid-template-columns:minmax(0,1.35fr) minmax(300px,1fr);align-items:start}}
+.btop #browsesvg{height:auto;aspect-ratio:var(--ar,2);max-height:72vh;min-height:0}
+#browse-side{display:flex;flex-direction:column;gap:10px;min-width:0}
+#browse-side #browse-contrast{margin:0}
+#browse-side #browse-tools{margin:0}
+.blg{display:flex;flex-wrap:wrap;gap:5px}
+.blg button{display:flex;align-items:center;gap:6px;background:var(--ink-2);border:1px solid var(--ink-3);
+  color:var(--text);font:inherit;font-size:12.5px;padding:4px 9px;border-radius:var(--r);cursor:pointer}
+.blg button.on{border-color:var(--amber)}
+.blg .sw{width:12px;height:12px;border-radius:3px;flex:0 0 auto}
+#browse-chips .chip.rel{box-shadow:inset 0 -3px 0 var(--amber)}
+#browse-legend{display:none}
 .bcard{background:var(--ink-2);border:1px solid var(--ink-3);border-radius:var(--r);padding:10px 12px;cursor:pointer}
 .bcard.on{border-color:var(--amber)}
 .bcard h3{font-size:15px;margin:0;font-weight:600}
@@ -427,10 +442,15 @@ table.mx td.zero{color:#3D4750}
   <div class="ov-body">
     <p>No quiz. Pick a group: where each language is written, how to tell it from its neighbours, and what it looks like.</p>
     <div class="chips" id="browse-chips" style="margin-bottom:12px"></div>
-    <svg id="browsesvg" preserveAspectRatio="xMidYMid meet"></svg>
-    <div id="browse-tools"><button class="chip" id="btn-drillcat">Practise this group</button>
-      <span class="hint">Tap a card to light up its area on the map.</span></div>
-    <div id="browse-contrast"></div>
+    <div class="btop">
+      <svg id="browsesvg" preserveAspectRatio="xMidYMid meet"></svg>
+      <div id="browse-side">
+        <div class="blg" id="browse-lg"></div>
+        <div id="browse-tools"><button class="chip" id="btn-drillcat">Practise this group</button>
+          <span class="hint">Tap a language to light up its area and cities.</span></div>
+        <div id="browse-contrast"></div>
+      </div>
+    </div>
     <div id="browse-cards"></div>
     <div id="browse-legend"></div>
   </div>
@@ -1257,7 +1277,7 @@ const lookPeers = id => DATA.filter(d => LOOK_OF[d.id] === LOOK_OF[id] && d.id !
    ============================================================ */
 /* Shown in Settings so a stale cached or undeployed copy is identifiable at a
    glance instead of being debugged as a logic fault. */
-const BUILD = "2026-10-30 · b10 multi-sign, cities, study";
+const BUILD = "2026-10-31 · b11 study layout, colours, #iso";
 const KEY = "signreader.v2";
 /* A saved setting always beats a new default, so changing DEFAULT_STATE alone
    never reaches anyone who has already played. Migrations run once and are
@@ -2653,35 +2673,76 @@ function medianDist(id){
    Being quizzed cold on a map you have never studied is the slowest
    way to learn one. This is the place to just look.
    ============================================================ */
-let browseCat = "indicn", browseFocus = null;
+let browseCat = "indicn", browseFocus = null, browseRel = [];
+/* One colour per language. The Indic ones match the Atlas card
+   "Écritures des panneaux Inde · Bangladesh · Sri Lanka". */
+const LANG_COLOR = {
+  hi:"#e5a54b", mr:"#b86a2c", ne:"#f0d29a", pa:"#e9d64e", gu:"#e0706a", ur:"#8fa3b3",
+  bn:"#3f9f66", as:"#86d6ad", or:"#33b5ad", te:"#5c8fdc", kn:"#9c7ee2", ta:"#d75fa9",
+  ml:"#c4da4f", mni:"#e35353", si:"#57c7e3"
+};
+const PALETTE = ["#e5a54b","#3f9f66","#5c8fdc","#d75fa9","#33b5ad","#e0706a","#9c7ee2",
+  "#c4da4f","#b86a2c","#57c7e3","#e9d64e","#86d6ad","#e35353","#8fa3b3"];
+function colorsFor(langs){
+  const out = {}, used = new Set();
+  langs.forEach(d => { if(LANG_COLOR[d.id]){ out[d.id] = LANG_COLOR[d.id]; used.add(LANG_COLOR[d.id]); } });
+  const free = PALETTE.filter(c => !used.has(c));
+  langs.forEach((d, i) => { if(!out[d.id]) out[d.id] = free.length ? free.shift() : PALETTE[i % PALETTE.length]; });
+  return out;
+}
+/* Countries whose signs are worth studying, and the groups that cover them
+   (first one opens). Easy Latin countries are left out on purpose. */
+const ISO_CAT = {
+  RU:["cyr"], UA:["cyr"], BG:["cyr"], MK:["cyr"], MN:["cyr"], KZ:["cyr"], KG:["cyr"],
+  RS:["cyr","slav"], BA:["cyr","slav"], ME:["cyr","slav"],
+  PL:["slav"], CZ:["slav"], SK:["slav"], HR:["slav"], SI:["slav"],
+  LV:["bal"], LT:["bal"], EE:["nor","bal"],
+  FI:["nor"], SE:["nor"], NO:["nor"], DK:["nor"], IS:["nor"], FO:["nor"],
+  GR:["greek"], CY:["greek"], GE:["greek"],
+  IL:["sem"], JO:["sem"], AE:["sem"], QA:["sem"], LB:["sem"], PS:["sem"], TN:["sem"],
+  IN:["indicn","indics","sem"], BD:["indicn"], NP:["indicn"], LK:["indics"],
+  TH:["sea"], LA:["sea"], KH:["sea"],
+  JP:["cjk"], KR:["cjk"], TW:["cjk"], HK:["cjk"], MO:["cjk"], SG:["cjk","indics"]
+};
 function browseLangs(cat){
   return DATA.filter(d => cat.fams.includes(d.fam) && (!S.ggonly || !NO_COVERAGE[d.id]));
 }
 function paintBrowse(){
-  document.querySelectorAll("#browse-chips .chip")
-    .forEach(c => c.setAttribute("aria-pressed", c.dataset.bcat === browseCat));
+  document.querySelectorAll("#browse-chips .chip").forEach(c => {
+    c.setAttribute("aria-pressed", c.dataset.bcat === browseCat);
+    c.classList.toggle("rel", browseRel.includes(c.dataset.bcat));
+  });
   const cat = CAT_BY_K[browseCat];
   const all = browseLangs(cat);
   const langs = all.filter(d => d.z.length);
+  const col = colorsFor(all);
   const svg = document.getElementById("browsesvg");
   if(browseFocus && !all.some(d => d.id === browseFocus)) browseFocus = null;
 
   if(!langs.length){ svg.style.display = "none"; svg.innerHTML = ""; }
   else {
     svg.style.display = "";
-    const keys = langs.flatMap(d => d.z);
+    const keys = [...new Set(langs.flatMap(d => d.z))];
     const bb = regionBBox(keys);
     const cx = (bb.x0+bb.x1)/2, cy = (bb.y0+bb.y1)/2;
-    const w = Math.max((bb.x1-bb.x0)*1.35, (bb.y1-bb.y0)*1.35*2, 14);
-    const vx = cx-w/2, vy = -(cy+w/4);
-    const fs = w/40;
+    const sx = (bb.x1-bb.x0)*1.25, sy = (bb.y1-bb.y0)*1.25;
+    /* the frame follows the group's shape: India is tall, Russia is wide */
+    const ar = Math.min(2.2, Math.max(1, sx / Math.max(sy, 1)));
+    const w = Math.max(sx, sy*ar, 14), h = w/ar;
+    const vx = cx-w/2, vy = -(cy+h/2);
+    const fs = w/34;
+    svg.style.setProperty("--ar", ar.toFixed(3));
     const fz = browseFocus ? (BY_ID[browseFocus].z || []) : [];
     let s = `<path class="land" d="${MAP_FILL}"/><path class="brd" d="${MAP_BORDERS}"/>`;
-    [...new Set(keys)].forEach(k => {
-      const cls = !browseFocus ? "zn" : fz.includes(k) ? "zn on" : "zn dim";
-      s += `<path class="${cls}" d="${regionPath(k)}"/>`;
+    /* larger regions first, so a small one shared by two languages stays visible */
+    const order = langs.flatMap(d => d.z.map(k => [k, d.id]))
+      .sort((a, b) => REGIONS[b[0]].a - REGIONS[a[0]].a);
+    order.forEach(([k, id]) => {
+      const on = !browseFocus || browseFocus === id;
+      const op = !browseFocus ? .62 : on ? .85 : .12;
+      s += `<path class="zn" d="${regionPath(k)}" style="fill:${col[id]};fill-opacity:${op};stroke:${col[id]};stroke-opacity:${on ? 1 : .35}"/>`;
     });
-    s += cityLayer(vx, vy, w, w/2, {fs: w/68, r: w/360, minorAt: 30, max: 70, keys, all: fz});
+    s += cityLayer(vx, vy, w, h, {fs: w/62, r: w/360, minorAt: 30, max: 70, keys, all: fz});
     /* one label per language, on its largest region */
     const items = langs.filter(d => !browseFocus || d.id === browseFocus).map(d => {
       const k = d.z.slice().sort((a,b)=>REGIONS[b].a-REGIONS[a].a)[0];
@@ -2689,17 +2750,19 @@ function paintBrowse(){
     });
     placeLabels(items, fs, w).forEach(it =>
       s += `<text class="lbl" x="${it.x}" y="${it.y.toFixed(2)}" font-size="${fs.toFixed(2)}" text-anchor="middle">${esc(it.t)}</text>`);
-    svg.setAttribute("viewBox", [vx, vy, w, w/2].map(n=>n.toFixed(2)).join(" "));
+    svg.setAttribute("viewBox", [vx, vy, w, h].map(n=>n.toFixed(2)).join(" "));
     svg.innerHTML = s;
   }
 
-  /* how to tell them apart: the cluster's own notes first */
+  /* colour key: also the quickest way to light one language up */
+  $("#browse-lg").innerHTML = all.map(d =>
+    `<button data-id="${d.id}" class="${browseFocus === d.id ? "on" : ""}"><span class="sw" style="background:${col[d.id]}"></span>${esc(d.name)}</button>`).join("");
+
   const notes = [...new Set(cat.fams)].map(f => CONTRAST[f]).filter(Boolean);
   $("#browse-contrast").innerHTML = notes.map(n =>
     `<h4>${esc(n[0])}</h4>` + n.slice(1).map(p => `<p>${p}</p>`).join("")).join("");
   $("#browse-contrast").style.display = notes.length ? "" : "none";
 
-  /* then one card per language: where, the rule, its letters, real text */
   const glyphs = (arr, cls, d) => arr.map(x =>
     `<span class="glyph${cls}" style="font-family:${d.font},sans-serif">${esc(x)}</span>`).join("");
   $("#browse-cards").innerHTML = all.map(d => {
@@ -2716,7 +2779,7 @@ function paintBrowse(){
     if(d.no.length) g += `<span class="lbl" style="margin-left:6px">never</span>` +
       d.no.slice(0, 6).map(x => `<span class="glyph neg">${esc(x)}</span>`).join("");
     if(!d.dec.length && d.m.length) g += `<span class="lbl">no letter of its own — known by what is missing</span>`;
-    return `<div class="bcard${browseFocus === d.id ? " on" : ""}" data-id="${d.id}">` +
+    return `<div class="bcard${browseFocus === d.id ? " on" : ""}" data-id="${d.id}" style="--c:${col[d.id]}">` +
       `<h3>${esc(d.name)}<span class="pl">${esc(d.place)}</span></h3>` +
       (sibs.length ? `<div class="sib">Same script as ${esc(sibs.join(", "))} — only the marked letters split them.</div>` : "") +
       `<div class="tl">${esc(d.tell)}</div>` +
@@ -2726,9 +2789,8 @@ function paintBrowse(){
       (!d.z.length ? `<div class="tl" style="margin:6px 0 0">Not on the map yet.</div>` : "") +
       "</div>";
   }).join("");
-  document.querySelectorAll("#browse-cards .bcard").forEach(c => c.onclick = () => {
-    browseFocus = browseFocus === c.dataset.id ? null : c.dataset.id; paintBrowse();
-  });
+  const focus = id => { browseFocus = browseFocus === id ? null : id; paintBrowse(); };
+  document.querySelectorAll("#browse-cards .bcard, #browse-lg button").forEach(c => c.onclick = () => focus(c.dataset.id));
   document.getElementById("browse-legend").innerHTML = langs.map(d =>
     `<div class="row"><b>${esc(d.name)}</b> <span>— ${esc(d.z.map(k=>REGIONS[k].n).join(", "))}</span></div>`
   ).join("");
@@ -2743,8 +2805,23 @@ CATS.forEach(c => {
 });
 $("#btn-browse").onclick = () => {
   if(S.cats && S.cats.length === 1 && CAT_BY_K[S.cats[0]]) browseCat = S.cats[0];
+  browseRel = [];
   paintBrowse(); $("#ov-browse").classList.add("open");
 };
+/* #in, #lk, #ru… open the study page on that country's groups (used by the
+   Atlas country pages); #study or #study:cyr open it on a group. */
+function routeHash(){
+  const h = decodeURIComponent(location.hash.slice(1)).toLowerCase();
+  if(!h) return;
+  const m = h.match(/^(?:study|map)(?::([a-z]+))?$/);
+  let cat = null, rel = [];
+  if(m) cat = m[1] && CAT_BY_K[m[1]] ? m[1] : browseCat;
+  else if(/^[a-z]{2}$/.test(h) && ISO_CAT[h.toUpperCase()]){ rel = ISO_CAT[h.toUpperCase()]; cat = rel[0]; }
+  if(!cat) return;
+  browseCat = cat; browseRel = rel; browseFocus = null;
+  paintBrowse(); $("#ov-browse").classList.add("open");
+}
+window.addEventListener("hashchange", routeHash);
 $("#btn-drillcat").onclick = () => {
   S.cats = [browseCat]; save(); paintSettings(); closeOverlays(); newRound();
 };
@@ -2754,6 +2831,7 @@ document.querySelectorAll("#mapall-chips .chip").forEach(c => c.onclick = () => 
 
 paintRail();
 newRound();
+routeHash();
 </script>
 </body>
 </html>
