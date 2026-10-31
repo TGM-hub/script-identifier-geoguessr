@@ -350,6 +350,10 @@ table.mx td.zero{color:#3D4750}
 .hedgemsg{display:block;font-size:.9em;margin-bottom:4px}
 .hedgemsg.ok{color:#7cc7b4}.hedgemsg.half{color:#f2c94c}.hedgemsg.bad{color:#ef7d6b}
 </style>
+<!-- tgm-pwa : hors-ligne et installation, généré par Atlas/tools/pwa.py -->
+<link rel="apple-touch-icon" href="icons/icon-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#12283a"><link rel="icon" href="icons/icon-192.png">
+<script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));</script>
+<!-- /tgm-pwa -->
 </head>
 <body>
 <div id="app">
@@ -1354,7 +1358,7 @@ function load(){
     return s;
   }catch(e){ return {...DEFAULT_STATE, mig: MIGRATION}; }
 }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} pushStats(); }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} pushStats(); mixSeed(); }
 /* shared summary for the Atlas daily review (tgm.stats.sign-reader, see tgm-core.js); signreader.v2 stays the reference */
 function pushStats(){
   if(!window.TGM) return;
@@ -1363,6 +1367,23 @@ function pushStats(){
   TGM.stats.write("sign-reader", { seen: S.seen, correct: S.right });
 }
 setTimeout(pushStats);
+/* Cross-trainer mix-ups (tgm.confusions, see tgm-core.js). A language counts for a country only when that is clear:
+   one country in LANG_CC, or the main one below. Spanish, Portuguese, French, Arabic… stay out (no single country). */
+const LANG_MAIN = { ru:"RU", sr:"RS", srl:"RS", el:"GR", ne:"NP", bn:"BD", hr:"HR", sq:"AL", sv:"SE", ta:"LK", it:"IT", ca:"AD" };
+function langCC(id){ const l = (LANG_CC[id] || "").split(" ").filter(Boolean); return l.length === 1 ? l[0] : (LANG_MAIN[id] || null); }
+function langName(id){ const d = DATA.find(x => x.id === id); return d ? d.name : id; }
+function mixAdd(truth, picked){
+  if(!window.TGM || !picked || picked.startsWith("__") || picked === truth) return;
+  TGM.confusions.add("sign-reader", langCC(truth), langCC(picked), langName(truth) + " / " + langName(picked));
+}
+function mixSeed(){
+  if(!window.TGM) return;
+  try{ LANG_MAIN; }catch(e){ return; }   // save() may run before this part of the script
+  const out = [];
+  for(const r in S.cm) for(const c in S.cm[r]) if(!c.startsWith("__") && c !== r) out.push([langCC(r), langCC(c), S.cm[r][c]]);
+  TGM.confusions.seed("sign-reader", out);
+}
+setTimeout(mixSeed);
 
 /* Weights drift back toward neutral, so something fixed in March
    eventually resurfaces instead of being marked easy forever. */
@@ -1942,6 +1963,7 @@ function answerHedge(a, b){
   S.cm[t.id] = S.cm[t.id] || {};
   const key = both ? t.id : one ? "__hedge" : (acc.has(a) ? b : a);
   S.cm[t.id][key] = (S.cm[t.id][key]||0) + 1;
+  if(!one) mixAdd(t.id, key);
   S.ts[t.id] = Date.now();
   setW(t.id, w(t.id) * (both ? 0.97 : one ? 1.15 : 1.6));
   save();
@@ -2027,6 +2049,7 @@ function answer(pickedId){
   const key = ok ? t.id : (pickedId || "__timeout");
   S.cm[t.id] = S.cm[t.id] || {};
   S.cm[t.id][key] = (S.cm[t.id][key]||0) + 1;
+  if(!ok) mixAdd(t.id, pickedId);
   S.ts[t.id] = Date.now();
 
   if(ok) setW(t.id, w(t.id) * (fast ? 0.85 : 0.97));
