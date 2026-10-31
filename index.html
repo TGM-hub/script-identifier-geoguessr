@@ -520,6 +520,7 @@ table.mx td.zero{color:#3D4750}
   </div>
 </div>
 
+<script src="tgm-core.js"></script>
 <script>
 "use strict";
 
@@ -723,7 +724,7 @@ function freqMult(id){
   let P = {}; try { P = JSON.parse(localStorage.getItem("cp.prefs") || "{}"); } catch(e){}
   const TW = Object.assign({1:4,2:2,3:1,4:0}, P.tierW || {}), OV = P.tierOv || {};
   const f = (LANG_CC[id] || "").split(" ").filter(Boolean)
-    .reduce((s, cc) => s + (+TW[+(OV[cc] || TIER_DEF[cc] || 4)] || 0), 0);
+    .reduce((s, cc) => s + (+TW[+(OV[cc] || (window.TGM && TGM.has(cc) ? TGM.tierDefault(cc) : TIER_DEF[cc]) || 4)] || 0), 0);
   return Math.max(0.3, Math.min(2.5, Math.sqrt(f) / 1.4));
 }
 
@@ -1353,7 +1354,15 @@ function load(){
     return s;
   }catch(e){ return {...DEFAULT_STATE, mig: MIGRATION}; }
 }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} pushStats(); }
+/* shared summary for the Atlas daily review (tgm.stats.sign-reader, see tgm-core.js); signreader.v2 stays the reference */
+function pushStats(){
+  if(!window.TGM) return;
+  const prev = TGM.stats.read("sign-reader");
+  if(prev && prev.seen === S.seen && prev.correct === S.right) return;
+  TGM.stats.write("sign-reader", { seen: S.seen, correct: S.right });
+}
+setTimeout(pushStats);
 
 /* Weights drift back toward neutral, so something fixed in March
    eventually resurfaces instead of being marked easy forever. */
